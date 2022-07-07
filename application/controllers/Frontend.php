@@ -1,0 +1,175 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Frontend extends CI_Controller
+{
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Mod_aplikasi');
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+        $this->load->model('Mod_user');
+    }
+
+    public function index()
+    {
+
+        // dead($data);
+        $this->load->view('templates/header_front');
+        $this->load->view('frontend/index');
+        $this->load->view('templates/footer_front');
+    }
+    public function pendaftaran()
+    {
+        $this->form_validation->set_rules('username', 'Nama Panggilan', 'trim|required|min_length[2]|max_length[30]');
+        $this->form_validation->set_rules('full_name', 'Nama Lengkap', 'trim|required|min_length[2]|max_length[30]');
+        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'trim|required');
+        $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required');
+        $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'trim|required');
+        $this->form_validation->set_rules('agama', 'Agama', 'trim|required');
+        $this->form_validation->set_rules('kewarganegaraan', 'Kewarganegaraan', 'trim|required');
+        $this->form_validation->set_rules('ber_khusus', 'Berkebutuhan Khusus', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('rt', 'Rt', 'trim|required');
+        $this->form_validation->set_rules('rw', 'Rw', 'trim|required');
+        $this->form_validation->set_rules('dusun', 'Dusun', 'trim|required');
+        $this->form_validation->set_rules('desa', 'Desa', 'trim|required');
+        $this->form_validation->set_rules('kecamatan', 'Kecamatan', 'trim|required');
+        $this->form_validation->set_rules('kode_pos', 'Kode Pos', 'trim|required');
+        $this->form_validation->set_rules('tempat_tinggal', 'Tempat Tinggal', 'trim|required');
+        $this->form_validation->set_rules('transportasi', 'Transportasi', 'trim|required');
+        $this->form_validation->set_rules('anak_keberapa', 'Anak Keberapa', 'trim|required');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $id_user = rand(000, 999);
+            $username = $this->input->post('username');
+            $full_name = $this->input->post('full_name');
+            $jenis_kelamin = $this->input->post('jenis_kelamin');
+            $tempat_lahir = $this->input->post('tempat_lahir');
+            $tanggal_lahir = $this->input->post('tanggal_lahir');
+            $username = $this->input->post('username');
+            $cek = $this->Mod_user->cekUsername($username);
+            if ($cek->num_rows() > 0) {
+                echo json_encode(array("error" => "Username Sudah Ada!!"));
+            } else {
+                $nama = slug($this->input->post('username'));
+                $config['upload_path']   = './assets/foto/user/';
+                $config['allowed_types'] = 'gif|jpg|jpeg|png'; //mencegah upload backdor
+                $config['max_size']      = '9000';
+                $config['max_width']     = '9000';
+                $config['max_height']    = '9024';
+                $config['file_name']     = $nama;
+
+                $this->upload->initialize($config);
+
+                if ($this->upload->do_upload('imagefile')) {
+                    $gambar = $this->upload->data();
+
+                    $save  = array(
+                        'username' => $username,
+                        'full_name' => $full_name,
+                        'password'  => get_hash('123456'),
+                        'id_level'  => 2,
+                        'is_active' => 'Y',
+                        'image' => $gambar['file_name']
+                    );
+                    dead($save);
+                    $this->db->insert("tbl_user", $save);
+                    redirect('frontend/index');
+                    // echo json_encode(array("status" => TRUE));
+                } else { //Apabila tidak ada gambar yang di upload
+                    $save  = array(
+                        'id_user' => $id_user,
+                        'username' => $username,
+                        'full_name' => $full_name,
+                        'password'  => get_hash('123456'),
+                        'id_level'  => 2,
+                        'is_active' => 'Y',
+                    );
+                    $save1 = array(
+                        'no_pendaftaran' => $id_user,
+                        'jenis_kelamin' => $jenis_kelamin,
+                        'tempat_lahir' => $tempat_lahir,
+                        'tanggal_lahir' => $tanggal_lahir,
+                        'agama' => $this->input->post('agama'),
+                        'kewarganegaraan' => $this->input->post('kewarganegaraan'),
+                        'ber_khusus' => $this->input->post('ber_khusus'),
+                        'alamat' => $this->input->post('alamat'),
+                        'rt' => $this->input->post('rt'),
+                        'rw' => $this->input->post('rw'),
+                        'dusun' => $this->input->post('dusun'),
+                        'desa' => $this->input->post('desa'),
+                        'kecamatan' => $this->input->post('kecamatan'),
+                        'kode_pos' => $this->input->post('kode_pos'),
+                        'tempat_tinggal' => $this->input->post('tempat_tinggal'),
+                        'transportasi' => $this->input->post('transportasi'),
+                        'anak_keberapa' => $this->input->post('anak_keberapa'),
+
+                    );
+                    // dead($save1);
+                    $this->db->insert("tbl_user", $save);
+                    $this->db->insert("siswa", $save1);
+                    redirect('frontend/index');
+                    // echo json_encode(array("status" => TRUE));
+                }
+            }
+            $this->load->view('templates/header_front');
+            $this->load->view('frontend/pendaftaran');
+            $this->load->view('templates/footer_front');
+        } else {
+            $this->load->view('templates/header_front');
+            $this->load->view('frontend/pendaftaran');
+            $this->load->view('templates/footer_front');
+        }
+    }
+    public function insert_admin()
+    {
+        // var_dump($this->input->post('username'));
+        $username = $this->input->post('username');
+        $cek = $this->Mod_user->cekUsername($username);
+        if ($cek->num_rows() > 0) {
+            echo json_encode(array("error" => "Username Sudah Ada!!"));
+        } else {
+            $nama = slug($this->input->post('username'));
+            $config['upload_path']   = './assets/foto/user/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png'; //mencegah upload backdor
+            $config['max_size']      = '9000';
+            $config['max_width']     = '9000';
+            $config['max_height']    = '9024';
+            $config['file_name']     = $nama;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('imagefile')) {
+                $gambar = $this->upload->data();
+
+                $save  = array(
+                    'username' => $this->input->post('username'),
+                    'full_name' => $this->input->post('full_name'),
+                    'password'  => get_hash('123456'),
+                    'id_level'  => 2,
+                    'is_active' => $this->input->post('is_active'),
+                    'image' => $gambar['file_name']
+                );
+                dead($save);
+                $this->db->insert("tbl_user", $save);
+                redirect('frontend/index');
+                // echo json_encode(array("status" => TRUE));
+            } else { //Apabila tidak ada gambar yang di upload
+                $save  = array(
+                    'username' => $this->input->post('username'),
+                    'full_name' => $this->input->post('full_name'),
+                    'password'  => get_hash('123456'),
+                    'id_level'  => 2,
+                    'is_active' => $this->input->post('is_active'),
+                );
+                dead($save);
+                $this->db->insert("tbl_user", $save);
+                redirect('frontend/index');
+                // echo json_encode(array("status" => TRUE));
+            }
+        }
+    }
+}
