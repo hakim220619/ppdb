@@ -83,10 +83,10 @@
                         </ul>
                     </div>
 
-                    <form role="form" action="<?= base_url('frontend/pendaftaran') ?>" class="login-box" enctype="multipart/form-data" method="post">
+
+                    <form role="form" action="<?= base_url('frontend/pendaftaran') ?>" class="login-box" enctype="multipart/form-data" method="POST">
                         <div class="tab-content" id="main_form">
                             <div class="tab-pane active" role="tabpanel" id="step1">
-
                                 <div class="row" style="margin-left: 40px">
                                     <h2 style="font-size: 30px;">Kententuan PPDB <strong class="" style="color:#4374fb; ">Tk Aba Al Amin Pasaranom</strong></h2>
                                     <div class="panel-body">
@@ -114,7 +114,6 @@
                                     <li><button type="button" class="default-btn next-step">Continue to next step</button></li>
                                 </ul>
                             </div>
-
                             <div class="tab-pane" role="tabpanel" id="step2">
                                 <h4 class="text-center">Data Pribadi</h4>
                                 <p style="text-align: center;" name="tanggal">Tanggal: <?= date('Y-m-d ') ?></p>
@@ -162,7 +161,7 @@
                                         <div class="form-group">
                                             <label>AGAMA</label>
                                             <select class="form-control" name="agama" id="agama">
-                                                <option value="<?= set_value('agama') ?>"></option>
+                                                <option value=""></option>
                                                 <option value="Islam">Islam</option>
                                                 <option value="Protestan">Protestan</option>
                                                 <option value="Katolik">Katolik</option>
@@ -277,18 +276,21 @@
                                         <div class="form-group">
                                             <label>Nomor HP</label>
                                             <input class="form-control" type="text" name="no_tlp" placeholder="" value="<?= set_value('no_tlp') ?>">
+                                            <?= form_error('no_tlp', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tinggi Badan</label>
                                             <input class="form-control" type="text" name="tinggi_badan" placeholder="cm" value="<?= set_value('tinggi_badan') ?>">
+                                            <?= form_error('tinggi_badan', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Berat Badan</label>
                                             <input class="form-control" type="text" name="berat_badan" placeholder="kg" value="<?= set_value('berat_badan') ?>">
+                                            <?= form_error('berat_badan', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -299,18 +301,21 @@
                                                 <option value="kd_1_km">Kurang dari 1 km</option>
                                                 <option value="ld_1_km">lebih dari 1 km</option>
                                             </select>
+                                            <?= form_error('jarak_kesekolah', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Waktu Tempuh ke sekolah (Jam/mnt)</label>
-                                            <input class="form-control" type="time" name="waktu_kesekolah" placeholder="jam/menit" value="<?= set_value('waktu_kesekolah') ?>">
+                                            <input class="form-control" type="text" name="waktu_kesekolah" placeholder="jam/menit" value="<?= set_value('waktu_kesekolah') ?>">
+                                            <?= form_error('waktu_kesekolah', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label> Jumlah Saudara Kandung</label>
                                             <input class="form-control" type="text" name="saudara_kandung" placeholder="" value="<?= set_value('saudara_kandung') ?>">
+                                            <?= form_error('saudara_kandung', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +325,7 @@
                                 </ul>
                             </div>
                             <div class="tab-pane" role="tabpanel" id="step4">
-                                <h4 class="text-center">Step 4</h4>
+                                <h4 class="text-center">Data Orang Tua</h4>
                                 <div class="all-info-container">
                                     <div class="list-content">
                                         <a href="#listone" data-toggle="collapse" aria-expanded="false" aria-controls="listone">Data Ayah Kandung <i class="fa fa-chevron-down"></i></a>
@@ -331,36 +336,58 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Nama ayah Kandung</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <input class="form-control" type="text" name="nama_ayah" placeholder="" value="<?= set_value('nama_ayah') ?>">
+                                                            <?= form_error('nama_ayah', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tempat Lahir</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <input class="form-control" type="text" name="tempat_lahir" placeholder="" value="<?= set_value('tempat_lahir') ?>">
+                                                            <?= form_error('tempat_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tanggal Lahir</label>
-                                                            <input class="form-control" type="date" name="name" placeholder="">
+                                                            <input class="form-control" type="date" name="tanggal_lahir" placeholder="" value="<?= set_value('tanggal_lahir') ?>">
+                                                            <?= form_error('tanggal_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pendidikan</label>
-                                                            <div class="custom-file">
-                                                                <input type="text" class="form-control" id="customFile">
-                                                            </div>
+                                                            <select class="form-control" name="pendidikan" id="pendidikan">
+                                                                <option value="">Pilih Pendidikan Ayah</option>
+                                                                <option value="tidak sekolah">Tidak Sekolah</option>
+                                                                <option value="sd/mi">SD/MI</option>
+                                                                <option value="smp/mts">SMP/MTS</option>
+                                                                <option value="sma/smk/ma">SMA/SMK/MA</option>
+                                                                <option value="diploma">Diploma</option>
+                                                                <option value="s1">S1</option>
+                                                                <option value="s2">S2</option>
+                                                                <option value="s3">S3</option>
+                                                            </select>
+                                                            <?= form_error('pendidikan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pekerjaan</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <select class="form-control" name="pekerjaan" id="pekerjaan">
+                                                                <option value="">Pilih Pekerjaan Ayah</option>
+                                                                <option value="buruh">Buruh</option>
+                                                                <option value="tani">Tani</option>
+                                                                <option value="wiraswasta">Wiraswasta</option>
+                                                                <option value="pns">Pns</option>
+                                                                <option value="tni/polri">Tni/Polri</option>
+                                                                <option value="perangkat desa">Perangkat Desa</option>
+                                                                <option value="nelayan">Nelayan</option>
+                                                                <option value="lain-lain">Lain-lain</option>
+                                                            </select>
+                                                            <?= form_error('pekerjaan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -373,37 +400,49 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Nama ibu Kandung</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <label>Nama Ibu Kandung</label>
+                                                            <input class="form-control" type="text" name="nama_ibu" placeholder="" value="<?= set_value('nama_ibu') ?>">
+                                                            <?= form_error('nama_ibu', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tempat Lahir</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <input class="form-control" type="text" name="tempat_lahir" placeholder="" value="<?= set_value('tempat_lahir') ?>">
+                                                            <?= form_error('tempat_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tanggal Lahir</label>
-                                                            <input class="form-control" type="date" name="name" placeholder="">
+                                                            <input class="form-control" type="date" name="tanggal_lahir" placeholder="" value="<?= set_value('tanggal_lahir') ?>">
+                                                            <?= form_error('tanggal_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pendidikan</label>
-                                                            <div class="custom-file">
-                                                                <input type="text" class="form-control" id="customFile">
-                                                            </div>
+                                                            <select class="form-control" name="pendidikan" id="pendidikan">
+                                                                <option value=""></option>
+                                                                <option value="tidak sekolah">Tidak Sekolah</option>
+                                                                <option value="sd/mi">SD/MI</option>
+                                                                <option value="smp/mts">SMP/MTS</option>
+                                                                <option value="sma/smk/ma">SMA/SMK/MA</option>
+                                                                <option value="diploma">Diploma</option>
+                                                                <option value="s1">S1</option>
+                                                                <option value="s2">S2</option>
+                                                                <option value="s3">S3</option>
+                                                            </select>
+                                                            <?= form_error('pendidikan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Pekerjaan</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <input class="form-control" type="text" name="pekerjaan" placeholder="" value="<?= set_value('pekerjaan') ?>">
+                                                            <?= form_error('pekerjaan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -417,59 +456,82 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Nama Wali</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <input class="form-control" type="text" name="nama_wali" placeholder="" value="<?= set_value('nama_wali') ?>">
+                                                            <?= form_error('nama_wali', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
-
-
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tempat Lahir</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <input class="form-control" type="text" name="tempat_lahir" placeholder="" value="<?= set_value('tempat_lahir') ?>">
+                                                            <?= form_error('tempat_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Tanggal Lahir</label>
-                                                            <input class="form-control" type="date" name="name" placeholder="">
+                                                            <input class="form-control" type="date" name="tanggal_lahir" placeholder="" value="<?= set_value('tanggal_lahir') ?>">
+                                                            <?= form_error('tanggal_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pendidikan</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <select class="form-control" name="pendidikan" id="pendidikan">
+                                                                <option value=""></option>
+                                                                <option value="tidak sekolah">Tidak Sekolah</option>
+                                                                <option value="sd/mi">SD/MI</option>
+                                                                <option value="smp/mts">SMP/MTS</option>
+                                                                <option value="sma/smk/ma">SMA/SMK/MA</option>
+                                                                <option value="diploma">Diploma</option>
+                                                                <option value="s1">S1</option>
+                                                                <option value="s2">S2</option>
+                                                                <option value="s3">S3</option>
+                                                            </select>
+                                                            <?= form_error('pendidikan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pekerjaan</label>
-                                                            <input class="form-control" type="text" name="name" placeholder="">
+                                                            <select class="form-control" name="pekerjaan" id="pekerjaan">
+                                                                <option value=""></option>
+                                                                <option value="buruh">Buruh</option>
+                                                                <option value="tani">Tani</option>
+                                                                <option value="wiraswasta">Wiraswasta</option>
+                                                                <option value="pns">Pns</option>
+                                                                <option value="tni/polri">Tni/Polri</option>
+                                                                <option value="perangkat desa">Perangkat Desa</option>
+                                                                <option value="nelayan">Nelayan</option>
+                                                                <option value="lain-lain">Lain-lain</option>
+                                                            </select>
+                                                            <?= form_error('pekerjaan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Scan Akta</label>
-                                                <input class="form-control" type="file" name="name" placeholder="cm">
+                                                <input class="form-control" type="file" name="akta" placeholder="cm">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Scan KK</label>
-                                                <input class="form-control" type="file" name="name" placeholder="cm">
+                                                <input class="form-control" type="file" name="kk" placeholder="cm">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Scan ktp Orang tua</label>
-                                                <input class="form-control" type="file" name="name" placeholder="cm">
+                                                <input class="form-control" type="file" name="ktp" placeholder="cm">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <ul class="list-inline pull-right">
@@ -477,7 +539,9 @@
                                     <li><button type="submit" class="default-btn next-step">Finish</button></li>
                                 </ul>
                             </div>
-                            <div class="clearfix"></div>
+                            <div class="clearfix">
+
+                            </div>
                         </div>
 
                     </form>

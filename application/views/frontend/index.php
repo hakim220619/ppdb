@@ -48,7 +48,7 @@
                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab <br class="d-none d-xl-block">dolores ea fugiat nesciunt quisquam.
                          </p>
                          <div class="header-button">
-                             <a href="<?= base_url('frontend/pendaftaran') ?>" rel="nofollow" class="btn btn-border-filled" style="width: 200px;">Pendaftaran PPDB</a>
+                             <a href="<?= base_url('frontend/form_pendaftaran') ?>" rel="nofollow" class="btn btn-border-filled" style="width: 200px;">Pendaftaran PPDB</a>
                              <a href="#contact" class="btn btn-border page-scroll">Login Siswa</a>
                          </div>
                      </div>
