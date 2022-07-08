@@ -6,26 +6,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="assets/login/image/png" href="assets/login/images/icons/favicon.ico" />
+    <link rel="icon" type="assets/login/image/png" href="<?php echo base_url(); ?>assets/login/images/icons/favicon.ico" />
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/vendor/animate/animate.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/vendor/css-hamburgers/hamburgers.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/vendor/animsition/css/animsition.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/vendor/select2/select2.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/vendor/daterangepicker/daterangepicker.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="assets/login/css/util.css">
-    <link rel="stylesheet" type="text/css" href="assets/login/css/main.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/login/css/main.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/iCheck/square/blue.css">
     <!-- Toastr -->
@@ -37,22 +37,20 @@
 </head>
 
 <body>
-
-
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('assets/login/images/bg-01.jpg');">
+        <div class="container-login100" style="background-color: rgb(19, 99, 223);">
             <div class="wrap-login100 p-t-30 p-b-50">
-                <span class="login100-form-title p-b-41">
-                    <a href="<?php echo base_url(); ?>">
-                        <b>
-                            <?php
-                            echo $aplikasi->nama_aplikasi;
-                            ?>
-                        </b></a>
-                </span>
+
                 <form class="login100-form validate-form p-b-33 p-t-5" action="" role="form" id="quickForm" method="post">
-                    <div class="wrap-input100 validate-input" data-validate="Enter username">
-                        <input class="input100" type="text" name="username" placeholder="User name" value="<?php echo set_value('username'); ?>">
+                    <span class="login100-form-title p-b-41">
+                        <a href="<?php echo base_url(); ?>">
+                            <b>
+
+                                <img src="<?php echo base_url(); ?>assets/foto/logo/<?php echo $aplikasi->logo ?>" alt="." style="height: 70px;">
+                            </b></a>
+                    </span>
+                    <div class="wrap-input100 validate-input" data-validate="Enter no_tlp">
+                        <input class="input100" type="text" name="no_tlp" placeholder="No Telepon" value="<?php echo set_value('no_tlp'); ?>">
                         <span class="focus-input100" data-placeholder="&#xe82a;"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Enter password">
@@ -64,6 +62,9 @@
                         <button class="login100-form-btn" type="button" id="login">
                             Login
                         </button>
+                        <a href="<?= base_url('frontend/index') ?>" class="login100-form-btn">
+                            Kembali
+                        </a>
                     </div>
 
                 </form>
@@ -80,21 +81,21 @@
     <div id="dropDownSelect1"></div>
 
     <!--===============================================================================================-->
-    <script src="assets/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
-    <script src="assets/login/vendor/animsition/js/animsition.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/animsition/js/animsition.min.js"></script>
     <!--===============================================================================================-->
-    <script src="assets/login/vendor/bootstrap/js/popper.js"></script>
-    <script src="assets/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/bootstrap/js/popper.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!--===============================================================================================-->
-    <script src="assets/login/vendor/select2/select2.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/select2/select2.min.js"></script>
     <!--===============================================================================================-->
-    <script src="assets/login/vendor/daterangepicker/moment.min.js"></script>
-    <script src="assets/login/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/daterangepicker/daterangepicker.js"></script>
     <!--===============================================================================================-->
-    <script src="assets/login/vendor/countdowntime/countdowntime.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
-    <script src="assets/login/js/main.js"></script>
+    <script src="<?php echo base_url(); ?>assets/login/js/main.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/plugins/sweetalert2/sweetalert2.min.js"></script>
     <!-- Toastr -->
@@ -111,7 +112,7 @@
     <script>
         $("#login").on('click', function() {
             $.ajax({
-                url: '<?php echo base_url('login/login') ?>',
+                url: '<?php echo base_url('login/login_sis') ?>',
                 type: 'POST',
                 data: $('#quickForm').serialize(),
                 dataType: 'JSON',

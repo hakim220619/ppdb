@@ -10,6 +10,7 @@ class Frontend extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->model('Mod_user');
+        $this->load->model('Mod_login');
     }
 
     public function index()
@@ -19,6 +20,7 @@ class Frontend extends CI_Controller
         $this->load->view('frontend/index');
         $this->load->view('templates/footer_front');
     }
+
     public function form_pendaftaran()
     {
         // dead($data);
@@ -105,6 +107,7 @@ class Frontend extends CI_Controller
                 'tempat_tinggal' => $this->input->post('tempat_tinggal'),
                 'transportasi' => $this->input->post('transportasi'),
                 'anak_keberapa' => $this->input->post('anak_keberapa'),
+                'id_verivikasi' => 2,
             );
             $save2 = array(
                 'no_pendaftaran' => $id_user,
@@ -136,7 +139,7 @@ class Frontend extends CI_Controller
             $this->db->insert("priodik", $save2);
             $this->db->insert("ayah", $save3);
             $this->db->insert("ibu", $save4);
-            redirect('frontend/index');
+            redirect('login/login_siswa');
             $this->load->view('templates/header_front');
             $this->load->view('frontend/pendaftaran');
             $this->load->view('templates/footer_front');

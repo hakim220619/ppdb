@@ -198,6 +198,14 @@ class Admin extends MY_Controller
         redirect('admin/user_data');
     }
 
+    public function verivikasi()
+    {
+        $data['title'] = "Verivikasi Data";
+        $data['verivikasi'] = $this->Mod_admin->verivikasi()->result();
+        // dead($data);
+        $this->template->load('layoutbackend', 'admin/verivikasi', $data);
+    }
+
     public function backup()
     {
 

@@ -42,17 +42,11 @@
                          </a>
                          <div class="collapse" id="master">
                              <ul class="nav nav-collapse">
-                                 <!-- 
                                  <li>
-                                     <a href="<?= base_url('admin/anggota') ?>">
-                                         <span class="sub-item">Anggota</span>
+                                     <a href="<?= base_url('admin/verivikasi') ?>">
+                                         <span class="sub-item">Verivikasi</span>
                                      </a>
                                  </li>
-                                 <li>
-                                     <a href="<?= base_url('admin/pegawai') ?>">
-                                         <span class="sub-item">Pegawai</span>
-                                     </a>
-                                 </li> -->
                                  <li>
                                      <a href="<?= base_url('admin/user_data') ?>">
                                          <span class="sub-item">User</span>
@@ -112,6 +106,22 @@
                          <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
                              <i class="fas fa-home"></i>
                              <p>Logout</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
+                     </li>
+                 <?php } ?>
+                 <?php if ($_SESSION["id_level"] == ("2")) { ?>
+                     <li class="nav-item active">
+                         <a href="<?= base_url('dashboard') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-home"></i>
+                             <p>Dashboard</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('siswa/pengumuman') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-american-sign-language-interpreting"></i>
+                             <p>Pengumuman</p>
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>

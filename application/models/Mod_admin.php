@@ -19,44 +19,14 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
-    public function pegawai()
+    public function verivikasi()
     {
         $query = $this->db->query("
-        select * from tbl_user where id_level = '2'
-        ");
-        return $query;
-    }
-
-    public function anggota()
-    {
-        $query = $this->db->query("
-        select * from tbl_user where id_level = '3'
-        ");
-        return $query;
-    }
-    public function total_simpanan($nik)
-    {
-        $query = $this->db->query("
-         select sum(jumlah) as jumlah
-        from simpanan
-        where nik = " . $nik . "
-        ");
-        return $query;
-    }
-    public function pinjaman()
-    {
-        $query = $this->db->query("
-        select tu.full_name, tu.image, tu.nik, tu.image, p.*
-        from pinjaman p
+        select s.*, tu.full_name, tu.username 
+        from siswa s
         left join tbl_user tu
-        on p.id_user=tu.id_user
-        ");
-        return $query;
-    }
-    public function nama_peminjam()
-    {
-        $query = $this->db->query("
-        select * from tbl_user where id_level = '3'
+        on s.no_pendaftaran=tu.id_user
+
         ");
         return $query;
     }

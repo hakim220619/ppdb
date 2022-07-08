@@ -436,10 +436,21 @@
                                                             <?= form_error('pendidikan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Pekerjaan</label>
-                                                            <input class="form-control" type="text" name="pekerjaan" placeholder="" value="<?= set_value('pekerjaan') ?>">
+                                                            <select class="form-control" name="pekerjaan" id="pekerjaan">
+                                                                <option value="">Pilih Pekerjaan Ayah</option>
+                                                                <option value="ibu rumah tangga">Ibu Rumah Tangga</option>
+                                                                <option value="buruh">Buruh</option>
+                                                                <option value="tani">Tani</option>
+                                                                <option value="wiraswasta">Wiraswasta</option>
+                                                                <option value="pns">Pns</option>
+                                                                <option value="tni/polri">Tni/Polri</option>
+                                                                <option value="perangkat desa">Perangkat Desa</option>
+                                                                <option value="nelayan">Nelayan</option>
+                                                                <option value="lain-lain">Lain-lain</option>
+                                                            </select>
                                                             <?= form_error('pekerjaan', '<small class="text-danger pl-3">', '</small>'); ?>
                                                         </div>
                                                     </div>

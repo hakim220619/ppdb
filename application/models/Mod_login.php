@@ -22,4 +22,8 @@ class Mod_login extends CI_Model
     {
         return $this->db->get_where('tbl_user', array('username' => $username));
     }
+    function check_db_siswa($no_tlp)
+    {
+        return $this->db->get_where('tbl_user', array('no_tlp' => $no_tlp));
+    }
 }

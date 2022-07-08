@@ -49,7 +49,7 @@
                          </p>
                          <div class="header-button">
                              <a href="<?= base_url('frontend/form_pendaftaran') ?>" rel="nofollow" class="btn btn-border-filled" style="width: 200px;">Pendaftaran PPDB</a>
-                             <a href="#contact" class="btn btn-border page-scroll">Login Siswa</a>
+                             <a href="<?= base_url('login/login_siswa') ?>" class="btn btn-border page-scroll">Login Siswa</a>
                          </div>
                      </div>
                  </div>
