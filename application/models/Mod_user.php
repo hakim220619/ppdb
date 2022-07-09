@@ -175,4 +175,49 @@ class Mod_user extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('tahun_ajaran', $data);
     }
+    public function detail_siswa($id)
+    {
+        $query = $this->db->query("
+		select * from 
+        siswa where no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
+    public function siswa_all($id)
+    {
+        $query = $this->db->query("
+		select s.*, tu.*, ta.tahun
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        left join tahun_ajaran ta
+        on s.id_tahun=ta.id
+        where s.no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
+    public function priodik($id)
+    {
+        $query = $this->db->query("
+		select * from 
+        priodik where no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
+    public function ayah($id)
+    {
+        $query = $this->db->query("
+		select * from 
+        ayah where no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
+    public function ibu($id)
+    {
+        $query = $this->db->query("
+		select * from 
+        ibu where no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
 }

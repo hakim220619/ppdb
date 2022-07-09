@@ -25,7 +25,7 @@
                                   <thead class="center">
                                       <tr style="font-size: 10px;">
                                           <th>NO</th>
-                                          <th>NO Pendaftra</th>
+                                          <th>NO Pendaftran</th>
                                           <th>Nama Lengkap</th>
                                           <th>Nama Panggilan</th>
                                           <th>Jenis Kelamin</th>
@@ -54,9 +54,9 @@
 
                                               <td>
                                                   <div class="form-button-action">
-                                                      <button data-target="#edit-apk<?= $a->no_pendaftaran ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                                          <i class="fa fa-edit"></i>
-                                                      </button>
+                                                      <a href="<?= base_url('admin/detail_siswa/' . $a->no_pendaftaran . '') ?>" type="button" title="Detail Data Siswa" class="btn btn-link btn-primary btn-lg">
+                                                          <i class="fa fa-info-circle"></i>
+                                                      </a>
                                                       <button type="button" class="btn btn-link btn-danger btn-lg" data-toggle="modal" data-target="#deluser<?= $a->no_pendaftaran ?>">
                                                           <i class="fa fa-times"></i>
                                                       </button>

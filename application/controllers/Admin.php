@@ -265,6 +265,17 @@ class Admin extends MY_Controller
         redirect('admin/tahun_ajaran');
     }
 
+    public function detail_siswa($id)
+    {
+        $data['title'] = "Detail Data Siswa";
+        $data['detail_siswa'] = $this->Mod_user->siswa_all($id)->result();
+        $data['priodik'] = $this->Mod_user->priodik($id)->result();
+        $data['ayah'] = $this->Mod_user->ayah($id)->result();
+        $data['ibu'] = $this->Mod_user->ibu($id)->result();
+        // dead($id);
+        $this->template->load('layoutbackend', 'admin/detail_siswa', $data);
+    }
+
     public function backup()
     {
 
