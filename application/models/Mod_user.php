@@ -220,4 +220,17 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    function accsiswa($id, $data)
+    {
+        $this->db->where('no_pendaftaran', $id);
+        $this->db->update('siswa', $data);
+    }
+    public function status($id)
+    {
+        $query = $this->db->query("
+		select * from 
+        siswa where no_pendaftaran = " . $id . " 
+		");
+        return $query;
+    }
 }

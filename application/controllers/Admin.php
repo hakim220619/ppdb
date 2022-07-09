@@ -275,6 +275,87 @@ class Admin extends MY_Controller
         // dead($id);
         $this->template->load('layoutbackend', 'admin/detail_siswa', $data);
     }
+    public function acc_siswa($id)
+    {
+        $save = array(
+            'id_verivikasi' => 1
+        );
+        // dead($save);
+        $this->Mod_user->accsiswa($id, $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Verivikasi Siswa Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+
+        redirect('admin/verivikasi');
+    }
+    public function batal_siswa($id)
+    {
+        $save = array(
+            'id_verivikasi' => 2
+        );
+        // dead($save);
+        $this->Mod_user->accsiswa($id, $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Batal Verivikasi Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+
+        redirect('admin/verivikasi');
+    }
+
+    public function tidterima_siswa($id)
+    {
+        $save = array(
+            'id_verivikasi' => 3
+        );
+        // dead($save);
+        $this->Mod_user->accsiswa($id, $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Batal Verivikasi Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+
+        redirect('admin/verivikasi');
+    }
+    public function insert_data_scan()
+    {
+        date_default_timezone_set("Asia/Kolkata");
+        $config['upload_path'] = './assets/foto/scan/';
+        $config['allowed_types']        = 'gif|jpg|png|pdf|';
+        $config['max_size']             = 2000;
+        $config['max_width']            = 2024;
+        $config['max_height']           = 2068;
+        $this->upload->initialize($config);
+        $this->upload->do_upload('userfile');
+        $data = array(
+            'akta' => $this->upload->data(),
+            'kk' => $this->upload->data(),
+            'ktp' => $this->upload->data()
+        );
+        $product_image = $data['akta']['file_name'];
+        $product_image1 = $data['kk']['file_name'];
+        $product_image2 = $data['ktp']['file_name'];
+
+        $save = array(
+            'akta' => $product_image,
+            'kk' => $product_image1,
+            'ktp' => $product_image2,
+        );
+        // dead($save);
+
+        // insert form data into database
+        $this->db->insert('siswa', $save);
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+
 
     public function backup()
     {

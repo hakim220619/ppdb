@@ -98,10 +98,17 @@
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>
-                     <li class="nav-item">
+                     <!-- <li class="nav-item">
                          <a href="<?= base_url('siswa/pengumuman') ?>" class="collapsed" aria-expanded="false">
                              <i class="fas fa-american-sign-language-interpreting"></i>
                              <p>Pengumuman</p>
+                             <!-- <span class="caret"></span> -->
+                     </a>
+                     </li> -->
+                     <li class="nav-item">
+                         <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-home"></i>
+                             <p>Logout</p>
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>

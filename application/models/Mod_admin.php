@@ -26,7 +26,7 @@ class Mod_admin extends CI_Model
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
-
+        order by s.id_verivikasi desc
         ");
         return $query;
     }

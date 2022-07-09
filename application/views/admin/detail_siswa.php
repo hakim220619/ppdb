@@ -23,6 +23,10 @@
                                                       <td>: <?php echo $u->no_pendaftaran ?></td>
                                                   </tr>
                                                   <tr>
+                                                      <td>No Telepon</td>
+                                                      <td>: <?php echo $u->no_tlp ?></td>
+                                                  </tr>
+                                                  <tr>
                                                       <td>Golongan</td>
                                                       <td>: <?php echo $u->golongan ?></td>
                                                   </tr>

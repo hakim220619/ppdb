@@ -539,26 +539,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Scan Akta</label>
-                                                <input class="form-control" type="file" name="akta" placeholder="cm">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Scan KK</label>
-                                                <input class="form-control" type="file" name="kk" placeholder="cm">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Scan ktp Orang tua</label>
-                                                <input class="form-control" type="file" name="ktp" placeholder="cm">
-                                            </div>
-                                        </div>
-                                    </div> -->
+
                                     </div>
 
                                     <ul class="list-inline pull-right">
