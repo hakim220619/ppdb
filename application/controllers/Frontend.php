@@ -7,7 +7,10 @@ class Frontend extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Mod_aplikasi');
-        $this->load->helper(array('form', 'url'));
+        $this->load->library('fungsi');
+        $this->load->library('user_agent');
+        $this->load->library('session');
+        $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('Mod_user');
         $this->load->model('Mod_login');
@@ -23,9 +26,11 @@ class Frontend extends CI_Controller
 
     public function form_pendaftaran()
     {
-        // dead($data);
+
+        $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->row();
+
         $this->load->view('templates/header_front');
-        $this->load->view('frontend/pendaftaran');
+        $this->load->view('frontend/pendaftaran', $data);
         $this->load->view('templates/footer_front');
     }
     public function pendaftaran()
@@ -73,13 +78,18 @@ class Frontend extends CI_Controller
         $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'trim|required');
         $this->form_validation->set_rules('pendidikan', 'Pendidikan', 'trim|required');
         $this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'trim|required');
+        // tanggal lahir
+
 
         $id_user = rand(000, 999);
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header_front');
-            $this->load->view('frontend/pendaftaran');
-            $this->load->view('templates/footer_front');
+            $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->row();
+            // dead($data['tahun_ajaran']);
+            $this->load->view('templates/header_front', $data);
+            $this->load->view('frontend/pendaftaran', $data);
+            $this->load->view('templates/footer_front', $data);
         } else {
+
             $save  = array(
                 'id_user' => $id_user,
                 'username' => $this->input->post('username'),
@@ -91,6 +101,8 @@ class Frontend extends CI_Controller
             );
             $save1 = array(
                 'no_pendaftaran' => $id_user,
+                'tanggal_daftar' => $this->input->post('tanggal_daftar'),
+                'id_tahun' => $this->input->post('id_tahun'),
                 'jenis_kelamin' => $this->input->post('jenis_kelamin'),
                 'tempat_lahir' => $this->input->post('tempat_lahir'),
                 'tanggal_lahir' => $this->input->post('tanggal_lahir'),
@@ -107,8 +119,10 @@ class Frontend extends CI_Controller
                 'tempat_tinggal' => $this->input->post('tempat_tinggal'),
                 'transportasi' => $this->input->post('transportasi'),
                 'anak_keberapa' => $this->input->post('anak_keberapa'),
+                'golongan' => $this->input->post('golongan'),
                 'id_verivikasi' => 2,
             );
+            // dead($save1);
             $save2 = array(
                 'no_pendaftaran' => $id_user,
                 'tinggi_badan' => $this->input->post('tinggi_badan'),
@@ -133,15 +147,16 @@ class Frontend extends CI_Controller
                 'pendidikan' => $this->input->post('pendidikan'),
                 'pekerjaan' => $this->input->post('pekerjaan'),
             );
-            // dead($save2);
+            // dead($save1);
             $this->db->insert("tbl_user", $save);
             $this->db->insert("siswa", $save1);
             $this->db->insert("priodik", $save2);
             $this->db->insert("ayah", $save3);
             $this->db->insert("ibu", $save4);
             redirect('login/login_siswa');
+            $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->row();
             $this->load->view('templates/header_front');
-            $this->load->view('frontend/pendaftaran');
+            $this->load->view('frontend/pendaftaran', $data);
             $this->load->view('templates/footer_front');
         }
     }

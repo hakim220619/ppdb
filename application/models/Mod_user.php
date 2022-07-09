@@ -155,11 +155,24 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
-    
+
     public function delete($id)
     {
         $this->db->where('id', $id);
         $this->db->delete('simpanan'); // Untuk mengeksekusi perintah delete data
     }
-    
+    public function tahun_ajaran()
+    {
+        $query = $this->db->query("
+		select * from 
+        tahun_ajaran 
+     
+		");
+        return $query;
+    }
+    function updatethajaran($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tahun_ajaran', $data);
+    }
 }

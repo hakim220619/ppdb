@@ -32,6 +32,7 @@ $apl = $this->db->get_where('aplikasi')->row_array();
     <!-- CSS Files -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/atlantis.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/demo.css">

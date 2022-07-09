@@ -206,6 +206,65 @@ class Admin extends MY_Controller
         $this->template->load('layoutbackend', 'admin/verivikasi', $data);
     }
 
+    public function tahun_ajaran()
+    {
+        $data['title'] = "Tahun Ajaran Data";
+        $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->result();
+        $data['status'] = ['Y', 'N'];
+        $this->template->load('layoutbackend', 'admin/tahun_ajaran', $data);
+    }
+    public function insert_thajaran()
+    {
+        $save  = array(
+            'id' => rand(00, 99),
+            'tahun' => $this->input->post('tahun'),
+            'status' => $this->input->post('status'),
+        );
+        // dead($save);
+        $this->db->insert('tahun_ajaran', $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Tambah Tahun Ajaran Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect('admin/tahun_ajaran');
+    }
+
+    public function update_tahunajaran()
+    {
+        $id = $this->input->post('id');
+        $save  = array(
+            'id' => $id,
+            'tahun' => $this->input->post('tahun'),
+            'status' => $this->input->post('status'),
+        );
+        // dead($save);
+        $this->Mod_user->updatethajaran($id, $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Update Tahun Ajaran Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect('admin/tahun_ajaran');
+    }
+
+    public function delete_tahunajaran()
+    {
+        $id = $this->input->get('id');
+
+        $this->db->delete('tahun_ajaran', array('id' => $id));
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Delete Tahun Ajaran Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+
+        redirect('admin/tahun_ajaran');
+    }
+
     public function backup()
     {
 

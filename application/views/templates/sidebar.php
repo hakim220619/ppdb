@@ -55,31 +55,6 @@
                              </ul>
                          </div>
                      </li>
-                     <!-- <li class="nav-item">
-                         <a data-toggle="collapse" href="#simpanan">
-                             <i class="fas fa-save"></i>
-                             <p>Keuangan</p>
-                             <span class="caret"></span>
-                         </a>
-                         <div class="collapse" id="simpanan">
-                             <ul class="nav nav-collapse">
-
-                                 <li>
-                                     <a href="<?= base_url('admin/simpanan') ?>">
-                                         <span class="sub-item">Simpanan</span>
-                                     </a>
-                                 </li>
-                                 <li>
-                                     <a href="<?= base_url('admin/pinjaman') ?>">
-                                         <span class="sub-item">Pinjaman</span>
-                                     </a>
-                                 </li>
-
-                             </ul>
-                         </div>
-                     </li> -->
-
-
                      <li class="nav-item">
                          <a data-toggle="collapse" href="#base">
                              <i class="fas fa-cogs"></i>
@@ -91,6 +66,11 @@
                                  <li>
                                      <a href="<?= base_url('aplikasi/index') ?>">
                                          <span class="sub-item">Aplikasi</span>
+                                     </a>
+                                 </li>
+                                 <li>
+                                     <a href="<?= base_url('admin/tahun_ajaran') ?>">
+                                         <span class="sub-item">Tahun Ajaran</span>
                                      </a>
                                  </li>
                                  <li>
