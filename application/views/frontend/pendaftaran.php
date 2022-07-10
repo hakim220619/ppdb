@@ -177,7 +177,7 @@
                                             <div class="form-group">
                                                 <label>AGAMA</label>
                                                 <select class="form-control" name="agama" id="agama">
-                                                    <option value=""></option>
+                                                    <option value="">Pilih Agama</option>
                                                     <option value="Islam">Islam</option>
                                                     <option value="Protestan">Protestan</option>
                                                     <option value="Katolik">Katolik</option>
@@ -439,7 +439,7 @@
                                                             <div class="form-group">
                                                                 <label>Pendidikan</label>
                                                                 <select class="form-control" name="pendidikan" id="pendidikan">
-                                                                    <option value=""></option>
+                                                                    <option value="">Pilih Pendidikan</option>
                                                                     <option value="tidak sekolah">Tidak Sekolah</option>
                                                                     <option value="sd/mi">SD/MI</option>
                                                                     <option value="smp/mts">SMP/MTS</option>
@@ -456,7 +456,7 @@
                                                             <div class="form-group">
                                                                 <label>Pekerjaan</label>
                                                                 <select class="form-control" name="pekerjaan" id="pekerjaan">
-                                                                    <option value="">Pilih Pekerjaan Ayah</option>
+                                                                    <option value="">Pilih Pekerjaan Ibu</option>
                                                                     <option value="ibu rumah tangga">Ibu Rumah Tangga</option>
                                                                     <option value="buruh">Buruh</option>
                                                                     <option value="tani">Tani</option>
@@ -505,7 +505,7 @@
                                                             <div class="form-group">
                                                                 <label>Pendidikan</label>
                                                                 <select class="form-control" name="pendidikan" id="pendidikan">
-                                                                    <option value=""></option>
+                                                                    <option value="">Pilih Pendidikan</option>
                                                                     <option value="tidak sekolah">Tidak Sekolah</option>
                                                                     <option value="sd/mi">SD/MI</option>
                                                                     <option value="smp/mts">SMP/MTS</option>
@@ -522,7 +522,7 @@
                                                             <div class="form-group">
                                                                 <label>Pekerjaan</label>
                                                                 <select class="form-control" name="pekerjaan" id="pekerjaan">
-                                                                    <option value=""></option>
+                                                                    <option value="">Pili Pekerjaan</option>
                                                                     <option value="buruh">Buruh</option>
                                                                     <option value="tani">Tani</option>
                                                                     <option value="wiraswasta">Wiraswasta</option>

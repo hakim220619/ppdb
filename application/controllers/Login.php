@@ -126,6 +126,13 @@ class Login extends CI_Controller
         $this->cache->clean();
         redirect('login');
     }
+    public function logout_siswa()
+    {
+        $this->session->sess_destroy();
+        $this->load->driver('cache');
+        $this->cache->clean();
+        redirect('login/login_siswa');
+    }
 
     private function _validate()
     {

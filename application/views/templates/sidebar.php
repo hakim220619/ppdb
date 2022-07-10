@@ -84,7 +84,7 @@
                      </li>
                      <li class="nav-item">
                          <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
-                             <i class="fas fa-home"></i>
+                             <i class="	fas fa-sign-out-alt"></i>
                              <p>Logout</p>
                              <!-- <span class="caret"></span> -->
                          </a>
@@ -98,16 +98,9 @@
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>
-                     <!-- <li class="nav-item">
-                         <a href="<?= base_url('siswa/pengumuman') ?>" class="collapsed" aria-expanded="false">
-                             <i class="fas fa-american-sign-language-interpreting"></i>
-                             <p>Pengumuman</p>
-                             <!-- <span class="caret"></span> -->
-                     </a>
-                     </li> -->
                      <li class="nav-item">
-                         <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">
-                             <i class="fas fa-home"></i>
+                         <a href="<?= base_url('login/logout_siswa') ?>" class="collapsed" aria-expanded="false">
+                             <i class="	fas fa-sign-out-alt"></i>
                              <p>Logout</p>
                              <!-- <span class="caret"></span> -->
                          </a>

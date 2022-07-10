@@ -9,6 +9,7 @@
               <div class="col-md-12">
                   <div class="row">
                       <div class="col-md-6">
+                          <br><br> <br>
                           <div class="card">
                               <a href="#informasisantri" class="d-block bg-success border border-success card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                                   <h6 class="m-0 font-weight-bold text-white"> Data Siswa</h6>
@@ -113,7 +114,19 @@
                               </div>
                           </div>
                       </div>
+
                       <div class="col-md-6">
+
+                          <div class="d-flex align-items-center">
+                              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                              <a href="<?= base_url('admin/verivikasi') ?>" class="btn btn-primary btn-round ml-auto" style="color: white;">
+                                  <i class="fa fa-minus"></i>
+                                  Kembali
+                              </a>
+                              <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_all_datasiswa/' . $get_id->no_pendaftaran) ?>')" class="btn btn-danger btn-round ml-auto"><i class="fa fa-times"> Hapus data</i></a>
+                          </div>
+                          <br>
+
                           <div class="card">
                               <a href="#datapriodik" class="d-block bg-warning border border-warning card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                                   <h6 class="m-0 font-weight-bold text-white"> Data Priodik</h6>
@@ -232,12 +245,52 @@
                               </div>
                           </div>
                       </div>
-
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <br><br> <br>
+                          <div class="card ">
+                              <a href="#dataall" class="d-block bg-danger border border-danger card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample" style="text-align: center;">
+                                  <h6 class="m-0 font-weight-bold text-white"> Data KK, AKTA, KTP</h6>
+                              </a>
+                              <div class="collapse show" id="dataall">
+                                  <div class="card-body" style="text-align: center;">
+                                      <?php foreach ($detail_siswa as $u) { ?>
+                                          <a href="<?= base_url('assets/foto/scan/' . $u->ktp) ?>" target="_blank" class="btn btn-primary btn-round ml-auto">Show KTP Pdf</a>
+                                          <a href=" <?= base_url('assets/foto/scan/' . $u->kk) ?>" target="_blank" class="btn btn-info btn-round ml-auto">Show KK Pdf</a>
+                                          <a href=" <?= base_url('assets/foto/scan/' . $u->akta) ?>" target="_blank" class="btn btn-warning btn-round ml-auto">Show AKTA Pdf</a>
+                                      <?php } ?>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
               </div>
           </div>
       </div>
-
+      <div class=" modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">Data yang dihapus tidak akan bisa dikembalikan.</div>
+                  <div class="modal-footer">
+                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                      <a id="btn-delete" class="btn btn-danger" href="#">Delete</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script>
+          function deleteConfirm(url) {
+              $('#btn-delete').attr('href', url);
+              $('#deleteModal').modal();
+          }
+      </script>
       <script>
           $(document).ready(function() {
               $('#datatables').DataTable({});

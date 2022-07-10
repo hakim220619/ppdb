@@ -272,6 +272,8 @@ class Admin extends MY_Controller
         $data['priodik'] = $this->Mod_user->priodik($id)->result();
         $data['ayah'] = $this->Mod_user->ayah($id)->result();
         $data['ibu'] = $this->Mod_user->ibu($id)->result();
+        $data['get_id'] = $this->Mod_user->siswa_all($id)->row();
+
         // dead($id);
         $this->template->load('layoutbackend', 'admin/detail_siswa', $data);
     }
@@ -324,38 +326,158 @@ class Admin extends MY_Controller
 
         redirect('admin/verivikasi');
     }
-    public function insert_data_scan()
+    public function update_ktp()
     {
-        date_default_timezone_set("Asia/Kolkata");
-        $config['upload_path'] = './assets/foto/scan/';
-        $config['allowed_types']        = 'gif|jpg|png|pdf|';
-        $config['max_size']             = 2000;
-        $config['max_width']            = 2024;
-        $config['max_height']           = 2068;
-        $this->upload->initialize($config);
-        $this->upload->do_upload('userfile');
-        $data = array(
-            'akta' => $this->upload->data(),
-            'kk' => $this->upload->data(),
-            'ktp' => $this->upload->data()
-        );
-        $product_image = $data['akta']['file_name'];
-        $product_image1 = $data['kk']['file_name'];
-        $product_image2 = $data['ktp']['file_name'];
+        if (!empty($_FILES['ktp']['name'])) {
+            // $this->_validate();
+            $id = $this->input->post('no_pendaftaran');
 
-        $save = array(
-            'akta' => $product_image,
-            'kk' => $product_image1,
-            'ktp' => $product_image2,
-        );
-        // dead($save);
+            $nama = 'KTP' . $id;
 
-        // insert form data into database
-        $this->db->insert('siswa', $save);
-        redirect($_SERVER['HTTP_REFERER']);
+            $config['upload_path']   = './assets/foto/scan/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png|pdf'; //mencegah upload backdor
+            $config['max_size']      = '9000';
+            $config['max_width']     = '9000';
+            $config['max_height']    = '9024';
+            $config['file_name']     = $nama;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('ktp')) {
+                $gambar = $this->upload->data();
+
+
+                $save  = array(
+                    'ktp' => $gambar['file_name']
+                );
+                $g = $this->Mod_user->getktp($id)->row_array();
+
+                if ($g != null) {
+                    //hapus gambar yg ada diserver
+                    unlink('assets/foto/scan/' . $g['ktp']);
+                }
+                // dead($save);
+                $this->Mod_user->updatektp($id, $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Upload KTP Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect('dashboard/index');
+            }
+        }
+    }
+    public function update_kk()
+    {
+        if (!empty($_FILES['kk']['name'])) {
+            // $this->_validate();
+            $id = $this->input->post('no_pendaftaran');
+
+            $nama = 'KK' . $id;
+
+            $config['upload_path']   = './assets/foto/scan/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png|pdf'; //mencegah upload backdor
+            $config['max_size']      = '9000';
+            $config['max_width']     = '9000';
+            $config['max_height']    = '9024';
+            $config['file_name']     = $nama;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('kk')) {
+                $gambar = $this->upload->data();
+
+
+                $save  = array(
+                    'kk' => $gambar['file_name']
+                );
+                $g = $this->Mod_user->getkk($id)->row_array();
+
+                if ($g != null) {
+                    //hapus gambar yg ada diserver
+                    unlink('assets/foto/scan/' . $g['kk']);
+                }
+                // dead($save);
+                $this->Mod_user->updatekk($id, $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Upload KK Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect('dashboard/index');
+            }
+        }
+    }
+    public function update_akta()
+    {
+        if (!empty($_FILES['akta']['name'])) {
+            // $this->_validate();
+            $id = $this->input->post('no_pendaftaran');
+
+            $nama = 'AKTA' . $id;
+
+            $config['upload_path']   = './assets/foto/scan/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png|pdf'; //mencegah upload backdor
+            $config['max_size']      = '9000';
+            $config['max_width']     = '9000';
+            $config['max_height']    = '9024';
+            $config['file_name']     = $nama;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('akta')) {
+                $gambar = $this->upload->data();
+
+
+                $save  = array(
+                    'akta' => $gambar['file_name']
+                );
+                $g = $this->Mod_user->getakta($id)->row_array();
+
+                if ($g != null) {
+                    //hapus gambar yg ada diserver
+                    unlink('assets/foto/scan/' . $g['akta']);
+                }
+                // dead($save);
+                $this->Mod_user->updatekk($id, $save);
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Upload AKTA Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+                redirect('dashboard/index');
+            }
+        }
     }
 
 
+    public function delete_all_datasiswa($id)
+    {
+        $g = $this->Mod_user->getImageall($id)->row_array();
+        if ($g != null) {
+            //hapus gambar yg ada diserver
+            unlink('assets/foto/scan/' . $g['kk']);
+            unlink('assets/foto/scan/' . $g['akta']);
+            unlink('assets/foto/scan/' . $g['ktp']);
+        }
+
+        $this->db->delete('tbl_user', array('id_user' => $id));
+        $this->db->delete('siswa', array('no_pendaftaran' => $id));
+        $this->db->delete('ayah', array('no_pendaftaran' => $id));
+        $this->db->delete('ibu', array('no_pendaftaran' => $id));
+        $this->db->delete('priodik', array('no_pendaftaran' => $id));
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Delete Siswa Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+
+        redirect('admin/verivikasi');
+    }
 
     public function backup()
     {

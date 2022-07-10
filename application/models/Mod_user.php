@@ -233,4 +233,50 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    function getImageall($id)
+    {
+        $this->db->select('ktp, kk, akta');
+        $this->db->from('siswa');
+        $this->db->where('no_pendaftaran', $id);
+        return $this->db->get();
+    }
+    function getktp($id)
+    {
+        $this->db->select('ktp');
+        $this->db->from('siswa');
+        $this->db->where('no_pendaftaran', $id);
+        return $this->db->get();
+    }
+
+    function updatektp($id, $data)
+    {
+        $this->db->where('no_pendaftaran', $id);
+        $this->db->update('siswa', $data);
+    }
+    function getkk($id)
+    {
+        $this->db->select('kk');
+        $this->db->from('siswa');
+        $this->db->where('no_pendaftaran', $id);
+        return $this->db->get();
+    }
+
+    function updatekk($id, $data)
+    {
+        $this->db->where('no_pendaftaran', $id);
+        $this->db->update('siswa', $data);
+    }
+    function getakta($id)
+    {
+        $this->db->select('akta');
+        $this->db->from('siswa');
+        $this->db->where('no_pendaftaran', $id);
+        return $this->db->get();
+    }
+
+    function updateakta($id, $data)
+    {
+        $this->db->where('no_pendaftaran', $id);
+        $this->db->update('siswa', $data);
+    }
 }
