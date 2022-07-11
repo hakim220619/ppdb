@@ -479,6 +479,78 @@ class Admin extends MY_Controller
         redirect('admin/verivikasi');
     }
 
+    public function pembayaran()
+    {
+        $data['title'] = "Detail Pembayaran Siswa";
+        $data['pembayaran'] = $this->Mod_user->pembayaran()->result();
+        $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->result();
+        $data['gol'] = ['A', 'B'];
+        $data['act'] = ['Y', 'N'];
+
+
+        // dead($id);
+        $this->template->load('layoutbackend', 'admin/pembayaran', $data);
+    }
+
+    public function insert_pembayaran()
+    {
+        $save  = array(
+            'id' => rand(00, 99),
+            'id_tahun' => $this->input->post('id_tahun'),
+            'golongan' => $this->input->post('golongan'),
+            'sumbangan_awal' => $this->input->post('sumbangan_awal'),
+            'seragam' => $this->input->post('seragam'),
+            'majalah' => $this->input->post('majalah'),
+            'alat_tulis' => $this->input->post('alat_tulis'),
+        );
+        // dead($save);
+        $this->db->insert('pembayaran', $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Tambah Pembayaran Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect('admin/pembayaran');
+    }
+
+    public function update_pembayaran()
+    {
+        $id = $this->input->post('id');
+        $save  = array(
+            'id' => $id,
+            'id_tahun' => $this->input->post('id_tahun'),
+            'golongan' => $this->input->post('golongan'),
+            'sumbangan_awal' => $this->input->post('sumbangan_awal'),
+            'seragam' => $this->input->post('seragam'),
+            'majalah' => $this->input->post('majalah'),
+            'alat_tulis' => $this->input->post('alat_tulis'),
+        );
+        // dead($save);
+        $this->Mod_user->updatepembayaran($id, $save);
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Update Pembayaran Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+        redirect('admin/pembayaran');
+    }
+    public function delete_pembayaran()
+    {
+        $id = $this->input->get('id');
+
+
+        $this->db->delete('pembayaran', array('id' => $id));
+        $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Delete Pembayaran Berhasil',
+                    icon: 'success'
+                    });
+                </script>");
+
+        redirect('admin/pembayaran');
+    }
     public function backup()
     {
 

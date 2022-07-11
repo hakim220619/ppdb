@@ -43,6 +43,16 @@
                          <div class="collapse" id="master">
                              <ul class="nav nav-collapse">
                                  <li>
+                                     <a href="<?= base_url('admin/tahun_ajaran') ?>">
+                                         <span class="sub-item">Tahun Ajaran</span>
+                                     </a>
+                                 </li>
+                                 <li>
+                                     <a href="<?= base_url('admin/pembayaran') ?>">
+                                         <span class="sub-item">Pembayaran</span>
+                                     </a>
+                                 </li>
+                                 <li>
                                      <a href="<?= base_url('admin/verivikasi') ?>">
                                          <span class="sub-item">Verivikasi</span>
                                      </a>
@@ -68,11 +78,7 @@
                                          <span class="sub-item">Aplikasi</span>
                                      </a>
                                  </li>
-                                 <li>
-                                     <a href="<?= base_url('admin/tahun_ajaran') ?>">
-                                         <span class="sub-item">Tahun Ajaran</span>
-                                     </a>
-                                 </li>
+
                                  <li>
                                      <a href="<?= base_url('admin/backup_data') ?>">
                                          <span class="sub-item">Backup Data</span>

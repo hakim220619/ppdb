@@ -170,6 +170,8 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+
+
     function updatethajaran($id, $data)
     {
         $this->db->where('id', $id);
@@ -278,5 +280,34 @@ class Mod_user extends CI_Model
     {
         $this->db->where('no_pendaftaran', $id);
         $this->db->update('siswa', $data);
+    }
+    public function pembayaran()
+    {
+        $query = $this->db->query("
+		select * 
+        from pembayaran p
+        left join tahun_ajaran ta
+        on p.id_tahun=ta.id
+        where p.is_active = 'Y'
+		");
+        return $query;
+    }
+
+    function updatepembayaran($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('pembayaran', $data);
+    }
+    public function view_pembayaran($no_pendaftaran)
+    {
+        $query = $this->db->query("
+		select *
+        from siswa s
+        left join pembayaran p
+        on s.golongan=p.golongan
+        where s.no_pendaftaran = " . $no_pendaftaran . " and
+        p.is_active = 'Y'
+		");
+        return $query;
     }
 }

@@ -145,7 +145,41 @@
                                     <a type="text" style="font-size: 20px; color: black; font-weight: 50px;">LULUS</a>
                                 <?php } ?>
                             </H3>
-                            <h3>Total Rincian Biaya: Rp.1.000.000</h3>
+                            <div class="card-body">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6">
+                                        <?php foreach ($pembayaran as $u) { ?>
+                                            <table class="table table-striped">
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>Sumbangan Awal </td>
+                                                        <td>: <?php echo rupiah($u->sumbangan_awal) ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Seragam</td>
+                                                        <td>: <?php echo rupiah($u->seragam) ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Majalah</td>
+                                                        <td>: <?php echo rupiah($u->majalah) ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Alat Tulis</td>
+                                                        <td>: <?php echo rupiah($u->alat_tulis) ?></td>
+                                                    </tr>
+                                                    <?php $total = $u->sumbangan_awal + $u->seragam + $u->majalah + $u->alat_tulis; ?>
+                                                    <tr>
+                                                        <td style="color: black;">Total</td>
+                                                        <td style="color: red;">: <?php echo rupiah($total) ?></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                             <h3>Silahkan Bayarkan Ke No Rekening 1219302083 dan kirim bukti pembayaran ke wa admin 085797887711</h3>
                         </div>
                     <?php } ?>

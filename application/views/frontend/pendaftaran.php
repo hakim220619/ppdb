@@ -322,9 +322,16 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Waktu Tempuh ke sekolah (Jam/mnt)</label>
-                                                <input class="form-control" type="text" name="waktu_kesekolah" placeholder="jam/menit" value="<?= set_value('waktu_kesekolah') ?>">
-                                                <?= form_error('waktu_kesekolah', '<small class="text-danger pl-3">', '</small>'); ?>
+                                                <label>Waktu Tempuh ke sekolah</label>
+                                                <select name="waktu_kesekolah" class="form-control" id="waktu_kesekolah" value="<?= set_value('jarak_kesekolah') ?>">
+                                                    <option value="" selected="selected">Pilih Waktu</option>
+                                                    <option value="5 menit">Kurang Dari 5 Menit</option>
+                                                    <option value="10 menit">Kurang Dari 10 Menit</option>
+                                                    <option value="30 menit">Kurang Dari 30 Menit</option>
+                                                    <option value="1 jam">Kurang Dari 1 Jam</option>
+                                                    <option value="2 jam">Lebih Dari 1 Jam</option>
+                                                </select>
+                                                <?= form_error('jarak_kesekolah', '<small class="text-danger pl-3">', '</small>'); ?>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
