@@ -145,6 +145,35 @@
     <br>
     <br>
     <br>
+    <h2>Data Priodik</h2>
+    <table width="100%" border="0">
+        <?php foreach ($priodik as $u) { ?>
+            <tr>
+                <td>No Pendaftaran </td>
+                <td>: <?php echo $u->no_pendaftaran ?></td>
+            </tr>
+            <tr>
+                <td>Tinggi Badan</td>
+                <td>: <?php echo $u->tinggi_badan ?></td>
+            </tr>
+            <tr>
+                <td>Berat Badan</td>
+                <td>: <?php echo $u->berat_badan ?></span></td>
+            </tr>
+            <tr>
+                <td>Jarak Kesekolah</td>
+                <td>: <?php echo $u->jarak_kesekolah ?></span></td>
+            </tr>
+            <tr>
+                <td>Waktu Kesekolah</td>
+                <td>: <?php echo $u->waktu_kesekolah ?></span></td>
+            </tr>
+            <tr>
+                <td>Saudara Kandung</td>
+                <td>: <?php echo $u->saudara_kandung ?></span></td>
+            </tr>
+        <?php } ?>
+    </table>
     <h2>Data Ayah</h2>
     <table width="100%" border="0">
         <?php foreach ($ayah as $u) { ?>
@@ -174,9 +203,6 @@
             </tr>
         <?php } ?>
     </table>
-    <br>
-    <br>
-    <br>
     <h2>Data Ibu</h2>
     <table width="100%" border="0">
         <?php foreach ($ibu as $u) { ?>
