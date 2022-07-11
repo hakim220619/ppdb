@@ -123,6 +123,10 @@
                                   <i class="fa fa-minus"></i>
                                   Kembali
                               </a>
+                              <a href="<?= base_url('admin/cetak_siswa/' . $get_id->no_pendaftaran) ?>" class="btn btn-warning btn-round ml-auto" style="color: white;">
+                                  <i class="fa fa-print"></i>
+                                  Cetak
+                              </a>
                               <a href="#!" onclick="deleteConfirm('<?php echo site_url('admin/delete_all_datasiswa/' . $get_id->no_pendaftaran) ?>')" class="btn btn-danger btn-round ml-auto"><i class="fa fa-times"> Hapus data</i></a>
                           </div>
                           <br>

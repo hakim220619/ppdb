@@ -310,4 +310,28 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    public function tot_verfikasi()
+    {
+        $query = $this->db->query("
+		select count(no_pendaftaran) as total_terverifikasi 
+        from siswa where id_verivikasi = 1
+		");
+        return $query;
+    }
+    public function tot_belumverfikasi()
+    {
+        $query = $this->db->query("
+		select count(no_pendaftaran) as total_belumterverifikasi 
+        from siswa where id_verivikasi = 2
+		");
+        return $query;
+    }
+    public function tot_ditolak()
+    {
+        $query = $this->db->query("
+		select count(no_pendaftaran) as total_ditolak 
+        from siswa where id_verivikasi = 3
+		");
+        return $query;
+    }
 }

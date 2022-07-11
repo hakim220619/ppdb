@@ -551,6 +551,20 @@ class Admin extends MY_Controller
 
         redirect('admin/pembayaran');
     }
+
+    public function cetak_siswa($id)
+    {
+        $data['title'] = "Detail Pembayaran Siswa";
+        $data['detail_siswa'] = $this->Mod_user->siswa_all($id)->result();
+        $data['priodik'] = $this->Mod_user->priodik($id)->result();
+        $data['ayah'] = $this->Mod_user->ayah($id)->result();
+        $data['ibu'] = $this->Mod_user->ibu($id)->result();
+        $data['get_id'] = $this->Mod_user->siswa_all($id)->row();
+        $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->result();
+        $data['pembayaran'] = $this->Mod_user->pembayaran()->result();
+        // dead($id);
+        $this->load->view('admin/cetak_siswa', $data);
+    }
     public function backup()
     {
 
