@@ -341,6 +341,8 @@ class Mod_user extends CI_Model
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
+        left join tahun_ajaran ta
+        on s.id_tahun=ta.id
         where id_verivikasi = 1
 		");
         return $query;

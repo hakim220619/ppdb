@@ -693,12 +693,22 @@ class Admin extends MY_Controller
         $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
         // Buat header tabel nya pada baris ke 3
         $sheet->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
-        $sheet->setCellValue('B3', "NIS"); // Set kolom B3 dengan tulisan "NIS"
-        $sheet->setCellValue('C3', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"
-        $sheet->setCellValue('D3', "JENIS KELAMIN"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
-        $sheet->setCellValue('E3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
-        $sheet->setCellValue('F3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
-        $sheet->setCellValue('G3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('B3', "Nama Lengkap"); // Set kolom B3 dengan tulisan "NIS"
+        $sheet->setCellValue('C3', "Nama Panggilan"); // Set kolom C3 dengan tulisan "NAMA"
+        $sheet->setCellValue('D3', "Tanggal Daftar"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
+        $sheet->setCellValue('E3', "No Telepon"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('F3', "Tahun Ajaran"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('G3', "Jenis Kelamin"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('H3', "Tempat Lahir / Tanggal Lahir"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('I3', "Agama / Kewarganegaraan / Berkebutuhan Khusus"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('J3', "Alamat"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('K3', "Rt / Rw"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('L3', "Dusun / Desa"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('M3', "Kecamatan / Kode Pos"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('N3', "Tempat Tinggal / Transportasi"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('O3', "Anak Ke / Golongan"); // Set kolom E3 dengan tulisan "ALAMAT"
+
+
         // Apply style header yang telah kita buat tadi ke masing-masing kolom header
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -707,21 +717,39 @@ class Admin extends MY_Controller
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
         $sheet->getStyle('G3')->applyFromArray($style_col);
+        $sheet->getStyle('H3')->applyFromArray($style_col);
+        $sheet->getStyle('I3')->applyFromArray($style_col);
+        $sheet->getStyle('J3')->applyFromArray($style_col);
+        $sheet->getStyle('K3')->applyFromArray($style_col);
+        $sheet->getStyle('L3')->applyFromArray($style_col);
+        $sheet->getStyle('M3')->applyFromArray($style_col);
+        $sheet->getStyle('N3')->applyFromArray($style_col);
+        $sheet->getStyle('O3')->applyFromArray($style_col);
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
         $siswa = $this->Mod_user->view_all()->result();
         $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
-        //     var_dump($siswa);
-        // die();
+        // dead($siswa);
         foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
             $sheet->setCellValue('A' . $numrow, $no);
             $sheet->setCellValue('B' . $numrow, $data->full_name);
-            $sheet->setCellValue('C' . $numrow, $data->no_tlp);
-            $sheet->setCellValue('D' . $numrow, $data->jenis_kelamin);
-            $sheet->setCellValue('E' . $numrow, $data->tempat_lahir);
-            $sheet->setCellValue('F' . $numrow, $data->tanggal_lahir);
-            $sheet->setCellValue('G' . $numrow, $data->agama);
+            $sheet->setCellValue('C' . $numrow, $data->username);
+            $sheet->setCellValue('D' . $numrow, $data->tanggal_daftar);
+            $sheet->setCellValue('E' . $numrow, $data->no_tlp);
+            $sheet->setCellValue('F' . $numrow, $data->tahun);
+            $sheet->setCellValue('G' . $numrow, $data->jenis_kelamin);
+            $sheet->setCellValue('H' . $numrow, $data->tempat_lahir . '/' . $data->tanggal_lahir);
+            $sheet->setCellValue('I' . $numrow, $data->agama . '/' . $data->kewarganegaraan . '/' . $data->ber_khusus);
+            $sheet->setCellValue('J' . $numrow, $data->alamat);
+            $sheet->setCellValue('K' . $numrow, $data->rt . '/' . $data->rw);
+            $sheet->setCellValue('L' . $numrow, $data->dusun . '/' . $data->desa);
+            $sheet->setCellValue('M' . $numrow, $data->kecamatan . '/' . $data->kode_pos);
+            $sheet->setCellValue('N' . $numrow, $data->tempat_tinggal . '/' . $data->transportasi);
+            $sheet->setCellValue('O' . $numrow, $data->anak_keberapa . '/' . $data->golongan);
+
+
+
 
             // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
@@ -731,6 +759,17 @@ class Admin extends MY_Controller
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('I' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('J' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('K' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('L' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('M' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('N' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('O' . $numrow)->applyFromArray($style_row);
+
+
+
 
             $no++; // Tambah 1 setiap kali looping
             $numrow++; // Tambah 1 setiap kali looping
@@ -740,9 +779,19 @@ class Admin extends MY_Controller
         $sheet->getColumnDimension('B')->setWidth(15); // Set width kolom B
         $sheet->getColumnDimension('C')->setWidth(25); // Set width kolom C
         $sheet->getColumnDimension('D')->setWidth(20); // Set width kolom D
-        $sheet->getColumnDimension('E')->setWidth(30); // Set width kolom E
-        $sheet->getColumnDimension('F')->setWidth(30); // Set width kolom F
-        $sheet->getColumnDimension('G')->setWidth(30); // Set width kolom G
+        $sheet->getColumnDimension('E')->setWidth(20); // Set width kolom E
+        $sheet->getColumnDimension('F')->setWidth(20); // Set width kolom F
+        $sheet->getColumnDimension('G')->setWidth(20); // Set width kolom G
+        $sheet->getColumnDimension('H')->setWidth(30); // Set width kolom G
+        $sheet->getColumnDimension('I')->setWidth(40); // Set width kolom G
+        $sheet->getColumnDimension('J')->setWidth(20); // Set width kolom G
+        $sheet->getColumnDimension('K')->setWidth(20); // Set width kolom G
+        $sheet->getColumnDimension('L')->setWidth(20); // Set width kolom G
+        $sheet->getColumnDimension('M')->setWidth(20); // Set width kolom G
+        $sheet->getColumnDimension('N')->setWidth(30); // Set width kolom G
+        $sheet->getColumnDimension('O')->setWidth(20); // Set width kolom G
+
+
 
         // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
