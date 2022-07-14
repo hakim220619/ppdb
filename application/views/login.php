@@ -64,6 +64,9 @@
                         <button class="login100-form-btn" type="button" id="login">
                             Login
                         </button>
+                        <a href="<?= base_url('frontend/index') ?>" class="login100-form-btn">
+                            Kembali
+                        </a>
                     </div>
 
                 </form>

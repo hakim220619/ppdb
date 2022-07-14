@@ -19,6 +19,7 @@ class Mod_admin extends CI_Model
         ");
         return $query;
     }
+
     public function verivikasi()
     {
         $query = $this->db->query("
@@ -26,6 +27,18 @@ class Mod_admin extends CI_Model
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
+        order by s.id_verivikasi desc
+        ");
+        return $query;
+    }
+    public function verifikasiacc()
+    {
+        $query = $this->db->query("
+        select s.*, tu.full_name, tu.username 
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        where s.id_verivikasi = '1'
         order by s.id_verivikasi desc
         ");
         return $query;

@@ -54,7 +54,7 @@
                         <span class="focus-input100" data-placeholder="&#xe82a;"></span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Enter password">
-                        <input class="input100" type="password" name="password" placeholder="Password" value="<?php echo set_value('password'); ?>">
+                        <input class="input100" type="password" name="password" placeholder="123456" value="<?php echo set_value('password'); ?>">
                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                     </div>
 

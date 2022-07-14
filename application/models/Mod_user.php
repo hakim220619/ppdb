@@ -334,4 +334,69 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    public function view_all()
+    {
+        $query = $this->db->query("
+		select * 
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        where id_verivikasi = 1
+		");
+        return $query;
+    }
+
+    public function siswa()
+    {
+        $query = $this->db->query("
+		select * 
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        where id_verivikasi = 1
+		");
+        return $query;
+    }
+    public function view_by_siswa($id)
+    {
+        $query = $this->db->query("
+		select * 
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        where id_verivikasi = 1 and tu.id_user = " . $id . "
+		");
+        return $query;
+    }
+
+    public function view_by_golongan($golongan)
+    {
+        $query = $this->db->query("
+		select * 
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        where id_verivikasi = 1 and s.golongan = '" . $golongan . "'
+		");
+        return $query;
+    }
+    public function view_by_tahun_ajaran($tahun)
+    {
+        $query = $this->db->query("
+		select * 
+        from siswa s
+        left join tbl_user tu
+        on s.no_pendaftaran=tu.id_user
+        where id_verivikasi = 1 and s.id_tahun = '" . $tahun . "'
+		");
+        return $query;
+    }
+    public function tahun()
+    {
+        $query = $this->db->query("
+		select * 
+        from tahun_ajaran
+		");
+        return $query;
+    }
 }

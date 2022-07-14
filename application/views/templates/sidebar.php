@@ -58,6 +58,11 @@
                                      </a>
                                  </li>
                                  <li>
+                                     <a href="<?= base_url('admin/siswa') ?>">
+                                         <span class="sub-item">Siswa Diterima</span>
+                                     </a>
+                                 </li>
+                                 <li>
                                      <a href="<?= base_url('admin/user_data') ?>">
                                          <span class="sub-item">User</span>
                                      </a>
@@ -87,6 +92,13 @@
 
                              </ul>
                          </div>
+                     </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('admin/laporan') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-print"></i>
+                             <p>Laporan</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
                      </li>
                      <li class="nav-item">
                          <a href="<?= base_url('login/logout') ?>" class="collapsed" aria-expanded="false">

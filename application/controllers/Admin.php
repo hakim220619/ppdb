@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'application/libraries/vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Admin extends MY_Controller
 {
@@ -486,8 +490,6 @@ class Admin extends MY_Controller
         $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->result();
         $data['gol'] = ['A', 'B'];
         $data['act'] = ['Y', 'N'];
-
-
         // dead($id);
         $this->template->load('layoutbackend', 'admin/pembayaran', $data);
     }
@@ -565,6 +567,504 @@ class Admin extends MY_Controller
         // dead($id);
         $this->load->view('admin/cetak_siswa', $data);
     }
+
+    public function siswa()
+    {
+        $data['title'] = "Siswa Diterima";
+        $data['verivikasi'] = $this->Mod_admin->verifikasiacc()->result();
+
+        // dead($id);
+        $this->template->load('layoutbackend', 'admin/siswa', $data);
+    }
+
+    function laporan()
+    {
+        if (isset($_GET['filter']) && !empty($_GET['filter'])) {
+            $filter = $_GET['filter'];
+            if ($filter == '1') {
+                $id_user = $_GET['id_user'];
+                $ket = 'Data Transaksi dari Siswa dengan Nomor Induk ' . $id_user;
+                $url_cetak = 'admin/cetak1?&id_user=' . $id_user;
+                $url_excel = 'admin/excel1?&id_user=' . $id_user;
+                $siswa = $this->Mod_user->view_by_siswa($id_user)->result();
+            } else if ($filter == '2') {
+                $golongan = $_GET['golongan'];
+                $ket = 'Data Per Golongan ' . $golongan;
+                $url_cetak = 'admin/cetak2?&golongan=' . $golongan;
+                $url_excel = 'admin/excel2?&golongan=' . $golongan;
+                $siswa = $this->Mod_user->view_by_golongan($golongan)->result();
+            } else if ($filter == '3') {
+                $tahun_ajaran = $_GET['tahun_ajaran'];
+                $ket = 'Data Per Tahun Ajaran ' . $tahun_ajaran;
+                $url_cetak = 'admin/cetak3?&tahun_ajaran=' . $tahun_ajaran;
+                $url_excel = 'admin/excel3?&tahun_ajaran=' . $tahun_ajaran;
+                $siswa = $this->Mod_user->view_by_tahun_ajaran($tahun_ajaran)->result();
+            }
+        } else {
+            $ket = 'Semua Data Siswa';
+            $url_cetak = 'admin/cetak';
+            $url_excel = 'admin/excel';
+            $siswa = $this->Mod_user->view_all()->result();
+        }
+
+        $data['ket'] = $ket;
+        $data['url_cetak'] = base_url($url_cetak);
+        $data['url_excel'] = base_url($url_excel);
+        $data['siswa'] = $siswa;
+        // dead($data['siswa']);
+        $data['siswa_select'] = $this->Mod_user->siswa()->result();
+        $data['tahun_ajaran'] = $this->Mod_user->tahun()->result();
+        $data['title'] = 'Laporan Data Siswa Diterima';
+        $data['user'] = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+        $this->template->load('layoutbackend', 'admin/laporan', $data);
+    }
+    public function cetak()
+    {
+        $ket = 'Semua Data Siswa Diterima';
+        ob_start();
+        require('assets/fpdf/fpdf.php');
+        $data['siswa_all'] = $this->Mod_user->view_all()->result();;
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_siswa', $data);
+    }
+    public function cetak1()
+    {
+        $id_user = $_GET['id_user'];
+        $ket = 'Data Siswa Dengan Id ' . $id_user;
+        ob_start();
+        require('assets/fpdf/fpdf.php');
+        $data['siswa_all'] = $this->Mod_user->view_by_siswa($id_user)->result();
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_siswa', $data);
+    }
+    public function cetak2()
+    {
+        $golongan = $_GET['golongan'];
+        $ket = 'Data Siswa Dengan Golongan ' . $golongan;
+        ob_start();
+        require('assets/fpdf/fpdf.php');
+        $data['siswa_all'] = $this->Mod_user->view_by_golongan($golongan)->result();
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_siswa', $data);
+    }
+    public function cetak3()
+    {
+        $tahun_ajaran = $_GET['tahun_ajaran'];
+        $ket = 'Data Siswa Dengan Tahun Ajaran ' . $tahun_ajaran;
+        ob_start();
+        require('assets/fpdf/fpdf.php');
+        $data['siswa_all'] = $this->Mod_user->view_by_tahun_ajaran($tahun_ajaran)->result();
+        $data['ket'] = $ket;
+        $this->load->view('admin/print_siswa', $data);
+    }
+    public function excel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true], // Set font nya jadi bold
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        $sheet->setCellValue('A1', "DATA SISWA YANG SUDAH DI VERIFIKASI"); // Set kolom A1 dengan tulisan "DATA SISWA"
+        $sheet->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
+        $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
+        // Buat header tabel nya pada baris ke 3
+        $sheet->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
+        $sheet->setCellValue('B3', "NIS"); // Set kolom B3 dengan tulisan "NIS"
+        $sheet->setCellValue('C3', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"
+        $sheet->setCellValue('D3', "JENIS KELAMIN"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
+        $sheet->setCellValue('E3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('F3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('G3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        // Apply style header yang telah kita buat tadi ke masing-masing kolom header
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+        $siswa = $this->Mod_user->view_all()->result();
+        $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
+        //     var_dump($siswa);
+        // die();
+        foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $data->full_name);
+            $sheet->setCellValue('C' . $numrow, $data->no_tlp);
+            $sheet->setCellValue('D' . $numrow, $data->jenis_kelamin);
+            $sheet->setCellValue('E' . $numrow, $data->tempat_lahir);
+            $sheet->setCellValue('F' . $numrow, $data->tanggal_lahir);
+            $sheet->setCellValue('G' . $numrow, $data->agama);
+
+            // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+
+            $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
+        }
+        // Set width kolom
+        $sheet->getColumnDimension('A')->setWidth(5); // Set width kolom A
+        $sheet->getColumnDimension('B')->setWidth(15); // Set width kolom B
+        $sheet->getColumnDimension('C')->setWidth(25); // Set width kolom C
+        $sheet->getColumnDimension('D')->setWidth(20); // Set width kolom D
+        $sheet->getColumnDimension('E')->setWidth(30); // Set width kolom E
+        $sheet->getColumnDimension('F')->setWidth(30); // Set width kolom F
+        $sheet->getColumnDimension('G')->setWidth(30); // Set width kolom G
+
+        // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        // Set orientasi kertas jadi LANDSCAPE
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        // Set judul file excel nya
+        $sheet->setTitle("Laporan Data Siswa");
+        // Proses file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Data Siswa.xls"'); // Set nama file excel nya
+        header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+    public function excel1()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true], // Set font nya jadi bold
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        $id_user = $_GET['id_user'];
+        $sheet->setCellValue('A1', "DATA SISWA YANG SUDAH DI VERIFIKASI DENGAN ID" . $id_user); // Set kolom A1 dengan tulisan "DATA SISWA"
+        $sheet->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
+        $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
+        // Buat header tabel nya pada baris ke 3
+        $sheet->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
+        $sheet->setCellValue('B3', "NIS"); // Set kolom B3 dengan tulisan "NIS"
+        $sheet->setCellValue('C3', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"
+        $sheet->setCellValue('D3', "JENIS KELAMIN"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
+        $sheet->setCellValue('E3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('F3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('G3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        // Apply style header yang telah kita buat tadi ke masing-masing kolom header
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+
+        $siswa = $this->Mod_user->view_by_siswa($id_user)->result();
+        $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
+        //     var_dump($siswa);
+        // die();
+        foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $data->full_name);
+            $sheet->setCellValue('C' . $numrow, $data->no_tlp);
+            $sheet->setCellValue('D' . $numrow, $data->jenis_kelamin);
+            $sheet->setCellValue('E' . $numrow, $data->tempat_lahir);
+            $sheet->setCellValue('F' . $numrow, $data->tanggal_lahir);
+            $sheet->setCellValue('G' . $numrow, $data->agama);
+
+            // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+
+            $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
+        }
+        // Set width kolom
+        $sheet->getColumnDimension('A')->setWidth(5); // Set width kolom A
+        $sheet->getColumnDimension('B')->setWidth(15); // Set width kolom B
+        $sheet->getColumnDimension('C')->setWidth(25); // Set width kolom C
+        $sheet->getColumnDimension('D')->setWidth(20); // Set width kolom D
+        $sheet->getColumnDimension('E')->setWidth(30); // Set width kolom E
+        $sheet->getColumnDimension('F')->setWidth(30); // Set width kolom F
+        $sheet->getColumnDimension('G')->setWidth(30); // Set width kolom G
+
+        // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        // Set orientasi kertas jadi LANDSCAPE
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        // Set judul file excel nya
+        $sheet->setTitle("Laporan Data Siswa");
+        // Proses file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Data Siswa.xls"'); // Set nama file excel nya
+        header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+    public function excel2()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true], // Set font nya jadi bold
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        $golongan = $_GET['golongan'];
+        $sheet->setCellValue('A1', "DATA SISWA YANG SUDAH DI VERIFIKASI DENGAN GOLONGAN " . $golongan); // Set kolom A1 dengan tulisan "DATA SISWA"
+        $sheet->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
+        $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
+        // Buat header tabel nya pada baris ke 3
+        $sheet->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
+        $sheet->setCellValue('B3', "NIS"); // Set kolom B3 dengan tulisan "NIS"
+        $sheet->setCellValue('C3', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"
+        $sheet->setCellValue('D3', "JENIS KELAMIN"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
+        $sheet->setCellValue('E3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('F3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('G3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        // Apply style header yang telah kita buat tadi ke masing-masing kolom header
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+
+        $siswa = $this->Mod_user->view_by_golongan($golongan)->result();
+        $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
+        //     var_dump($siswa);
+        // die();
+        foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $data->full_name);
+            $sheet->setCellValue('C' . $numrow, $data->no_tlp);
+            $sheet->setCellValue('D' . $numrow, $data->jenis_kelamin);
+            $sheet->setCellValue('E' . $numrow, $data->tempat_lahir);
+            $sheet->setCellValue('F' . $numrow, $data->tanggal_lahir);
+            $sheet->setCellValue('G' . $numrow, $data->agama);
+
+            // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+
+            $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
+        }
+        // Set width kolom
+        $sheet->getColumnDimension('A')->setWidth(5); // Set width kolom A
+        $sheet->getColumnDimension('B')->setWidth(15); // Set width kolom B
+        $sheet->getColumnDimension('C')->setWidth(25); // Set width kolom C
+        $sheet->getColumnDimension('D')->setWidth(20); // Set width kolom D
+        $sheet->getColumnDimension('E')->setWidth(30); // Set width kolom E
+        $sheet->getColumnDimension('F')->setWidth(30); // Set width kolom F
+        $sheet->getColumnDimension('G')->setWidth(30); // Set width kolom G
+
+        // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        // Set orientasi kertas jadi LANDSCAPE
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        // Set judul file excel nya
+        $sheet->setTitle("Laporan Data Siswa");
+        // Proses file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Data Siswa.xls"'); // Set nama file excel nya
+        header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+    public function excel3()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+        $style_col = [
+            'font' => ['bold' => true], // Set font nya jadi bold
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+        $style_row = [
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+            ],
+            'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+            ]
+        ];
+        $tahun_ajaran = $_GET['tahun_ajaran'];
+        $sheet->setCellValue('A1', "DATA SISWA YANG SUDAH DI VERIFIKASI DENGAN ID TAHUN " . $tahun_ajaran); // Set kolom A1 dengan tulisan "DATA SISWA"
+        $sheet->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
+        $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
+        // Buat header tabel nya pada baris ke 3
+        $sheet->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
+        $sheet->setCellValue('B3', "NIS"); // Set kolom B3 dengan tulisan "NIS"
+        $sheet->setCellValue('C3', "NAMA"); // Set kolom C3 dengan tulisan "NAMA"
+        $sheet->setCellValue('D3', "JENIS KELAMIN"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
+        $sheet->setCellValue('E3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('F3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        $sheet->setCellValue('G3', "ALAMAT"); // Set kolom E3 dengan tulisan "ALAMAT"
+        // Apply style header yang telah kita buat tadi ke masing-masing kolom header
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+
+        $siswa = $this->Mod_user->view_by_tahun_ajaran($tahun_ajaran)->result();
+        $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
+        //     var_dump($siswa);
+        // die();
+        foreach ($siswa as $data) { // Lakukan looping pada variabel siswa
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $data->full_name);
+            $sheet->setCellValue('C' . $numrow, $data->no_tlp);
+            $sheet->setCellValue('D' . $numrow, $data->jenis_kelamin);
+            $sheet->setCellValue('E' . $numrow, $data->tempat_lahir);
+            $sheet->setCellValue('F' . $numrow, $data->tanggal_lahir);
+            $sheet->setCellValue('G' . $numrow, $data->agama);
+
+            // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+
+            $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
+        }
+        // Set width kolom
+        $sheet->getColumnDimension('A')->setWidth(5); // Set width kolom A
+        $sheet->getColumnDimension('B')->setWidth(15); // Set width kolom B
+        $sheet->getColumnDimension('C')->setWidth(25); // Set width kolom C
+        $sheet->getColumnDimension('D')->setWidth(20); // Set width kolom D
+        $sheet->getColumnDimension('E')->setWidth(30); // Set width kolom E
+        $sheet->getColumnDimension('F')->setWidth(30); // Set width kolom F
+        $sheet->getColumnDimension('G')->setWidth(30); // Set width kolom G
+
+        // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+        // Set orientasi kertas jadi LANDSCAPE
+        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        // Set judul file excel nya
+        $sheet->setTitle("Laporan Data Siswa");
+        // Proses file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Data Siswa.xls"'); // Set nama file excel nya
+        header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+
+
     public function backup()
     {
 
