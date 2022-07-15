@@ -6,12 +6,20 @@
          <div class="sidebar-content">
              <div class="user">
                  <div class="avatar-sm float-left mr-2">
+                     <?php if ($this->session->userdata['id_level'] == 1) { ?>
+                         <img src="<?php echo base_url(); ?>assets/foto/user/<?php echo $this->session->userdata['image']; ?>" alt="..." class="avatar-img rounded-circle">
+                     <?php } elseif ($this->session->userdata['id_level'] == 3) { ?>
+                         <img src="<?php echo base_url(); ?>assets/foto/user/<?php echo $this->session->userdata['image']; ?>" alt="..." class="avatar-img rounded-circle">
+                     <?php } elseif ($this->session->userdata['id_level'] == 2) { ?>
+                         <img src="<?php echo base_url(); ?>assets/foto/user/siswa.png" alt="..." class="avatar-img rounded-circle">
+                     <?php } ?>
 
-                     <img src="<?php echo base_url(); ?>assets/foto/user/<?php echo $this->session->userdata['image']; ?>" alt="..." class="avatar-img rounded-circle">
                  </div>
                  <div class="info">
                      <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+
                          <span>
+
                              <?php echo $this->session->userdata['username']; ?>
 
                              <b>
@@ -113,6 +121,13 @@
                          <a href="<?= base_url('dashboard') ?>" class="collapsed" aria-expanded="false">
                              <i class="fas fa-home"></i>
                              <p>Dashboard</p>
+                             <!-- <span class="caret"></span> -->
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="<?= base_url('admin/data_siswa') ?>" class="collapsed" aria-expanded="false">
+                             <i class="fas fa-user-graduate"></i>
+                             <p>Data Siswa</p>
                              <!-- <span class="caret"></span> -->
                          </a>
                      </li>

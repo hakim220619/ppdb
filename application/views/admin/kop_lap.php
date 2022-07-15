@@ -1,7 +1,7 @@
 <table border="0" width="100%">
     <tr>
         <td align="center">
-            <img src="img/logo2.png" alt="logo2" width="60">
+            <img src="<?= base_url('assets/frontend/foto/logo') ?>/logo.png" alt="logo2" width="60">
         </td>
         <td align="center">
             <b style="font-size:23px;">PANITIA PENERIAMAAN PESERTA DIDIK BARU (PPDB)</b> <br>
@@ -9,7 +9,7 @@
             <b style="font-size:20px;">TAHUN PELAJARAN <?php echo date('Y') ?>/<?php echo date('Y') + 1 ?></b>
         </td>
         <td align="center">
-            <img src="img/logo.png" alt="logo2" width="70">
+            <img src="<?= base_url('assets/frontend/foto/logo') ?>/logo.png" alt="logo2" width="70">
         </td>
     </tr>
     <tr>

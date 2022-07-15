@@ -108,7 +108,7 @@
                                                                   <div class="col-md-12 pr-0">
                                                                       <div class="form-group form-group-default">
                                                                           <label>Telpon</label>
-                                                                          <input type="text" class="form-control" id="tlp" name="tlp" placeholder="Telpon" value="<?= $a->tlp ?>">
+                                                                          <input type="text" class="form-control" id="tlp" name="tlp" placeholder="Telpon" value="<?= $a->no_tlp ?>">
                                                                           <?= form_error('tlp', '<small class="text-danger pl-3">', '</small>'); ?>
                                                                       </div>
                                                                   </div>

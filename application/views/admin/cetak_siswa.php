@@ -139,12 +139,8 @@
         <?php } ?>
     </table>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+
+
     <h2>Data Priodik</h2>
     <table width="100%" border="0">
         <?php foreach ($priodik as $u) { ?>
@@ -232,10 +228,36 @@
             </tr>
         <?php } ?>
     </table>
-    <br>
-    <br>
-    <br>
-    <br>
+    <h2>Data Wali</h2>
+    <table width="100%" border="0">
+        <?php foreach ($wali as $u) { ?>
+            <tr>
+                <td>No Pendaftaran </td>
+                <td>: <?php echo $u->no_pendaftaran ?></td>
+            </tr>
+            <tr>
+                <td>Nama Wali</td>
+                <td>: <?php echo $u->nama_wali ?></td>
+            </tr>
+            <tr>
+                <td>Tempat Lahir</td>
+                <td>: <?php echo $u->tempat_lahir ?></span></td>
+            </tr>
+            <tr>
+                <td>Tanggal Lahir</td>
+                <td>: <?php echo $u->tanggal_lahir ?></span></td>
+            </tr>
+            <tr>
+                <td>Pendidikan</td>
+                <td>: <?php echo $u->pendidikan ?></span></td>
+            </tr>
+            <tr>
+                <td>Pekerjaan</td>
+                <td>: <?php echo $u->pekerjaan ?></span></td>
+            </tr>
+        <?php } ?>
+    </table>
+
 
     <div style="float:right;">
         Purworejo, <?php date('d-m-Y'); ?> <br>

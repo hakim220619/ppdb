@@ -53,7 +53,7 @@ class Admin extends MY_Controller
                     'full_name' => $this->input->post('full_name'),
                     'password'  => get_hash($this->input->post('password')),
                     'id_level'  => $this->input->post('level'),
-                    'tlp'  => $this->input->post('tlp'),
+                    'no_tlp'  => $this->input->post('no_tlp'),
                     'is_active' => $this->input->post('is_active'),
                     'image' => $gambar['file_name']
                 );
@@ -66,7 +66,7 @@ class Admin extends MY_Controller
                     'username' => $this->input->post('username'),
                     'full_name' => $this->input->post('full_name'),
                     'password'  => get_hash($this->input->post('password')),
-                    'tlp'  => $this->input->post('tlp'),
+                    'no_tlp'  => $this->input->post('no_tlp'),
                     'id_level'  => $this->input->post('level'),
                     'is_active' => $this->input->post('is_active')
                 );
@@ -104,7 +104,7 @@ class Admin extends MY_Controller
                         'full_name' => $this->input->post('full_name'),
                         'password'  => get_hash($this->input->post('password')),
                         'id_level'  => $this->input->post('level'),
-                        'tlp'  => $this->input->post('tlp'),
+                        'no_tlp'  => $this->input->post('no_tlp'),
                         'is_active' => $this->input->post('is_active'),
                         'image' => $gambar['file_name']
                     );
@@ -113,7 +113,7 @@ class Admin extends MY_Controller
                         'username' => $this->input->post('username'),
                         'full_name' => $this->input->post('full_name'),
                         'id_level'  => $this->input->post('level'),
-                        'tlp'  => $this->input->post('tlp'),
+                        'no_tlp'  => $this->input->post('no_tlp'),
                         'is_active' => $this->input->post('is_active'),
                         'image' => $gambar['file_name']
                     );
@@ -138,7 +138,7 @@ class Admin extends MY_Controller
                         'username' => $this->input->post('username'),
                         'full_name' => $this->input->post('full_name'),
                         'password'  => get_hash($this->input->post('password')),
-                        'tlp'  => $this->input->post('tlp'),
+                        'no_tlp'  => $this->input->post('no_tlp'),
                         'id_level'  => $this->input->post('level'),
                         'is_active' => $this->input->post('is_active')
                     );
@@ -146,7 +146,7 @@ class Admin extends MY_Controller
                     $save  = array(
                         'username' => $this->input->post('username'),
                         'full_name' => $this->input->post('full_name'),
-                        'tlp'  => $this->input->post('tlp'),
+                        'no_tlp'  => $this->input->post('no_tlp'),
                         'id_level'  => $this->input->post('level'),
                         'is_active' => $this->input->post('is_active')
                     );
@@ -164,7 +164,7 @@ class Admin extends MY_Controller
                     'username' => $this->input->post('username'),
                     'full_name' => $this->input->post('full_name'),
                     'password'  => get_hash($this->input->post('password')),
-                    'tlp'  => $this->input->post('tlp'),
+                    'no_tlp'  => $this->input->post('no_tlp'),
                     'id_level'  => $this->input->post('level'),
                     'is_active' => $this->input->post('is_active')
                 );
@@ -172,7 +172,7 @@ class Admin extends MY_Controller
                 $save  = array(
                     'username' => $this->input->post('username'),
                     'full_name' => $this->input->post('full_name'),
-                    'tlp'  => $this->input->post('tlp'),
+                    'no_tlp'  => $this->input->post('no_tlp'),
                     'id_level'  => $this->input->post('level'),
                     'is_active' => $this->input->post('is_active')
                 );
@@ -204,7 +204,7 @@ class Admin extends MY_Controller
 
     public function verivikasi()
     {
-        $data['title'] = "Verivikasi Data";
+        $data['title'] = "Verifikasi Data";
         $data['verivikasi'] = $this->Mod_admin->verivikasi()->result();
         // dead($data);
         $this->template->load('layoutbackend', 'admin/verivikasi', $data);
@@ -276,6 +276,7 @@ class Admin extends MY_Controller
         $data['priodik'] = $this->Mod_user->priodik($id)->result();
         $data['ayah'] = $this->Mod_user->ayah($id)->result();
         $data['ibu'] = $this->Mod_user->ibu($id)->result();
+        $data['wali'] = $this->Mod_user->wali($id)->result();
         $data['get_id'] = $this->Mod_user->siswa_all($id)->row();
 
         // dead($id);
@@ -290,7 +291,7 @@ class Admin extends MY_Controller
         $this->Mod_user->accsiswa($id, $save);
         $this->session->set_flashdata('success', "<script>
                     swal({
-                    text: 'Verivikasi Siswa Berhasil',
+                    text: 'Verifikasi Siswa Berhasil',
                     icon: 'success'
                     });
                 </script>");
@@ -306,7 +307,7 @@ class Admin extends MY_Controller
         $this->Mod_user->accsiswa($id, $save);
         $this->session->set_flashdata('success', "<script>
                     swal({
-                    text: 'Batal Verivikasi Berhasil',
+                    text: 'Batal Verifikasi Berhasil',
                     icon: 'success'
                     });
                 </script>");
@@ -323,7 +324,7 @@ class Admin extends MY_Controller
         $this->Mod_user->accsiswa($id, $save);
         $this->session->set_flashdata('success', "<script>
                     swal({
-                    text: 'Batal Verivikasi Berhasil',
+                    text: 'Batal Verifikasi Berhasil',
                     icon: 'success'
                     });
                 </script>");
@@ -561,6 +562,7 @@ class Admin extends MY_Controller
         $data['priodik'] = $this->Mod_user->priodik($id)->result();
         $data['ayah'] = $this->Mod_user->ayah($id)->result();
         $data['ibu'] = $this->Mod_user->ibu($id)->result();
+        $data['wali'] = $this->Mod_user->wali($id)->result();
         $data['get_id'] = $this->Mod_user->siswa_all($id)->row();
         $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->result();
         $data['pembayaran'] = $this->Mod_user->pembayaran()->result();
@@ -1631,7 +1633,71 @@ class Admin extends MY_Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }
+    public function data_siswa()
+    {
+        $user = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $id = $user['id_user'];
+        $data['title'] = "Detail Data Siswa";
+        $data['detail_siswa'] = $this->Mod_user->siswa_all($id)->result();
+        $data['priodik'] = $this->Mod_user->priodik($id)->result();
+        $data['ayah'] = $this->Mod_user->ayah($id)->result();
+        $data['ibu'] = $this->Mod_user->ibu($id)->result();
+        $data['wali'] = $this->Mod_user->wali($id)->result();
+        $data['get_id'] = $this->Mod_user->siswa_all($id)->row();
 
+        // dead($id);
+        $this->template->load('layoutbackend', 'admin/data_siswa', $data);
+    }
+
+    public function reset_password()
+    {
+        $data['user'] = $this->db->get_where('tbl_user', ['id_user' => $this->session->userdata('id_user')])->row_array();
+        $data['title'] = 'Change Password';
+
+        $this->form_validation->set_rules('current_password', 'Password saat ini', 'required|trim');
+        $this->form_validation->set_rules('new_password', 'Password baru', 'required|trim|min_length[6]|matches[konfirmasi_password]');
+        $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi password', 'required|trim|min_length[6]|matches[new_password]');
+
+        if ($this->form_validation->run() == false) {
+            $this->template->load('layoutbackend', 'admin/reset_password', $data);
+        } else {
+            $current_password = $this->input->post('current_password');
+            $new_password = $this->input->post('new_password');
+            if (!password_verify($current_password, $data['user']['password'])) {
+                $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: 'Password Saat Ini Salah',
+                    icon: 'error'
+                    });
+                </script>");
+                redirect('admin/reset_password');
+            } else {
+                if ($current_password == $new_password) {
+                    $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: ' Password baru tidak boleh sama dengan saat ini !',
+                    icon: 'warning'
+                    });
+                </script>");
+
+                    redirect('admin/reset_password');
+                } else {
+                    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+                    $this->db->set('password', $password_hash);
+                    $this->db->where('id_user', $this->session->userdata('id_user'));
+                    $this->db->update('tbl_user');
+                    $this->session->set_flashdata('success', "<script>
+                    swal({
+                    text: ' Password berhasil diubah !',
+                    icon: 'success'
+                    });
+                </script>");
+                    redirect('admin/reset_password');
+                }
+            }
+        }
+    }
 
 
     public function backup()

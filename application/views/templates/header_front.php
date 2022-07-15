@@ -1,3 +1,8 @@
+<?php
+$apl = $this->db->get_where('aplikasi')->row_array();
+
+// dead($apl);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +15,9 @@
     <meta name="keywords" content="Bootstrap, Landing page, Template, Business, Service">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Grayrids">
-    <title>Slick - Bootstrap 4 Template</title>
+    <title><?php echo $apl['title']; ?></title>
 
-    <link rel="shortcut icon" href="https://preview.uideck.com/items/slick/business/img/2.png" type="image/png">
+    <link rel="shortcut icon" href="<?= base_url() ?>assets/foto/logo/<?php echo $apl['logo']; ?>" type="image/png">
 
     <link rel="stylesheet" href="<?= base_url('assets/frontend/slick/') ?>/css/bootstrap-4.5.0.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/frontend/slick/') ?>/css/animate.css">

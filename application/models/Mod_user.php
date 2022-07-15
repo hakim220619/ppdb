@@ -222,6 +222,14 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    public function wali($id)
+    {
+        $query = $this->db->query("
+		select * from 
+        wali where no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
     function accsiswa($id, $data)
     {
         $this->db->where('no_pendaftaran', $id);
