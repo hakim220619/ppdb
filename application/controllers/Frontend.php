@@ -147,12 +147,21 @@ class Frontend extends CI_Controller
                 'pendidikan' => $this->input->post('pendidikan'),
                 'pekerjaan' => $this->input->post('pekerjaan'),
             );
+            $save5 = array(
+                'no_pendaftaran' => $id_user,
+                'nama_wali' => $this->input->post('nama_wali'),
+                'tempat_lahir' => $this->input->post('tempat_lahir'),
+                'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+                'pendidikan' => $this->input->post('pendidikan'),
+                'pekerjaan' => $this->input->post('pekerjaan'),
+            );
             // dead($save1);
             $this->db->insert("tbl_user", $save);
             $this->db->insert("siswa", $save1);
             $this->db->insert("priodik", $save2);
             $this->db->insert("ayah", $save3);
             $this->db->insert("ibu", $save4);
+            $this->db->insert("wali", $save5);
             redirect('login/login_siswa');
             $data['tahun_ajaran'] = $this->Mod_user->tahun_ajaran()->row();
             $this->load->view('templates/header_front');

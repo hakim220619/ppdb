@@ -337,12 +337,23 @@ class Mod_user extends CI_Model
     public function view_all()
     {
         $query = $this->db->query("
-		select * 
+		select s.*,tu.full_name, tu.username, ta.tahun, tu.no_tlp, a.nama_ayah, a.tempat_lahir as temp_ayah, a.tanggal_lahir as tgl_ayah, a.pendidikan, a.pekerjaan, 
+        i.nama_ibu, i.tempat_lahir as temp_ibu, i.tanggal_lahir as tgl_ibu, i.pendidikan as pend_ibu, i.pekerjaan as pek_ibu,
+        w.nama_wali, w.tempat_lahir as temp_wali, w.tanggal_lahir as tgl_wali, w.pendidikan as pend_wali, w.pekerjaan as pek_wali,
+        p.tinggi_badan, p.berat_badan, p.jarak_kesekolah, p.waktu_kesekolah, p.saudara_kandung   
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
         left join tahun_ajaran ta
         on s.id_tahun=ta.id
+        left join ayah a
+        on s.no_pendaftaran=a.no_pendaftaran
+        left join ibu i
+        on s.no_pendaftaran=i.no_pendaftaran
+        left join priodik p
+        on s.no_pendaftaran=p.no_pendaftaran
+        left join wali w
+        on s.no_pendaftaran=w.no_pendaftaran
         where id_verivikasi = 1
 		");
         return $query;
@@ -362,10 +373,23 @@ class Mod_user extends CI_Model
     public function view_by_siswa($id)
     {
         $query = $this->db->query("
-		select * 
+		select s.*,tu.full_name, tu.username, ta.tahun, tu.no_tlp, a.nama_ayah, a.tempat_lahir as temp_ayah, a.tanggal_lahir as tgl_ayah, a.pendidikan, a.pekerjaan, 
+        i.nama_ibu, i.tempat_lahir as temp_ibu, i.tanggal_lahir as tgl_ibu, i.pendidikan as pend_ibu, i.pekerjaan as pek_ibu,
+        w.nama_wali, w.tempat_lahir as temp_wali, w.tanggal_lahir as tgl_wali, w.pendidikan as pend_wali, w.pekerjaan as pek_wali,
+        p.tinggi_badan, p.berat_badan, p.jarak_kesekolah, p.waktu_kesekolah, p.saudara_kandung   
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
+        left join tahun_ajaran ta
+        on s.id_tahun=ta.id
+        left join ayah a
+        on s.no_pendaftaran=a.no_pendaftaran
+        left join ibu i
+        on s.no_pendaftaran=i.no_pendaftaran
+        left join priodik p
+        on s.no_pendaftaran=p.no_pendaftaran
+        left join wali w
+        on s.no_pendaftaran=w.no_pendaftaran
         where id_verivikasi = 1 and tu.id_user = " . $id . "
 		");
         return $query;
@@ -374,10 +398,23 @@ class Mod_user extends CI_Model
     public function view_by_golongan($golongan)
     {
         $query = $this->db->query("
-		select * 
+		select s.*,tu.full_name, tu.username, ta.tahun, tu.no_tlp, a.nama_ayah, a.tempat_lahir as temp_ayah, a.tanggal_lahir as tgl_ayah, a.pendidikan, a.pekerjaan, 
+        i.nama_ibu, i.tempat_lahir as temp_ibu, i.tanggal_lahir as tgl_ibu, i.pendidikan as pend_ibu, i.pekerjaan as pek_ibu,
+        w.nama_wali, w.tempat_lahir as temp_wali, w.tanggal_lahir as tgl_wali, w.pendidikan as pend_wali, w.pekerjaan as pek_wali,
+        p.tinggi_badan, p.berat_badan, p.jarak_kesekolah, p.waktu_kesekolah, p.saudara_kandung   
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
+        left join tahun_ajaran ta
+        on s.id_tahun=ta.id
+        left join ayah a
+        on s.no_pendaftaran=a.no_pendaftaran
+        left join ibu i
+        on s.no_pendaftaran=i.no_pendaftaran
+        left join priodik p
+        on s.no_pendaftaran=p.no_pendaftaran
+        left join wali w
+        on s.no_pendaftaran=w.no_pendaftaran
         where id_verivikasi = 1 and s.golongan = '" . $golongan . "'
 		");
         return $query;
@@ -385,10 +422,23 @@ class Mod_user extends CI_Model
     public function view_by_tahun_ajaran($tahun)
     {
         $query = $this->db->query("
-		select * 
+		select s.*,tu.full_name, tu.username, ta.tahun, tu.no_tlp, a.nama_ayah, a.tempat_lahir as temp_ayah, a.tanggal_lahir as tgl_ayah, a.pendidikan, a.pekerjaan, 
+        i.nama_ibu, i.tempat_lahir as temp_ibu, i.tanggal_lahir as tgl_ibu, i.pendidikan as pend_ibu, i.pekerjaan as pek_ibu,
+        w.nama_wali, w.tempat_lahir as temp_wali, w.tanggal_lahir as tgl_wali, w.pendidikan as pend_wali, w.pekerjaan as pek_wali,
+        p.tinggi_badan, p.berat_badan, p.jarak_kesekolah, p.waktu_kesekolah, p.saudara_kandung   
         from siswa s
         left join tbl_user tu
         on s.no_pendaftaran=tu.id_user
+        left join tahun_ajaran ta
+        on s.id_tahun=ta.id
+        left join ayah a
+        on s.no_pendaftaran=a.no_pendaftaran
+        left join ibu i
+        on s.no_pendaftaran=i.no_pendaftaran
+        left join priodik p
+        on s.no_pendaftaran=p.no_pendaftaran
+        left join wali w
+        on s.no_pendaftaran=w.no_pendaftaran
         where id_verivikasi = 1 and s.id_tahun = '" . $tahun . "'
 		");
         return $query;
