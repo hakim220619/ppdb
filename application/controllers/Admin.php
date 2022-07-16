@@ -1699,18 +1699,23 @@ class Admin extends MY_Controller
         }
     }
 
-
+    public function backup_data()
+    {
+        $data['title'] = "User Data";
+        // dead($data);
+        $this->template->load('layoutbackend', 'admin/backup_data');
+    }
     public function backup()
     {
-
+        $this->load->helper('download');
         $this->load->dbutil();
         $data['setting_school'] = "DATA";
         $prefs = [
             'format' => 'zip',
-            'filename' => $data['setting_school']['setting_value'] . '-' . date("Y-m-d H-i-s") . '.sql'
+            'filename' => $data['setting_school'] . '-' . date("Y-m-d H-i-s") . '.sql'
         ];
         $backup = $this->dbutil->backup($prefs);
-        $file_name = $data['setting_school']['setting_value'] . '-' . date("Y-m-d-H-i-s") . '.zip';
+        $file_name = $data['setting_school'] . '-' . date("Y-m-d-H-i-s") . '.zip';
         $this->zip->download($file_name);
     }
 
