@@ -277,6 +277,7 @@ class Admin extends MY_Controller
         $data['ayah'] = $this->Mod_user->ayah($id)->result();
         $data['ibu'] = $this->Mod_user->ibu($id)->result();
         $data['wali'] = $this->Mod_user->wali($id)->result();
+        $data['get_pdf'] = $this->Mod_user->get_pdf($id)->row();
         $data['get_id'] = $this->Mod_user->siswa_all($id)->row();
 
         // dead($id);

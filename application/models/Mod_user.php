@@ -230,6 +230,14 @@ class Mod_user extends CI_Model
 		");
         return $query;
     }
+    public function get_pdf($id)
+    {
+        $query = $this->db->query("
+		select akta, kk, ktp from
+        siswa where no_pendaftaran = '" . $id . "' 
+		");
+        return $query;
+    }
     function accsiswa($id, $data)
     {
         $this->db->where('no_pendaftaran', $id);

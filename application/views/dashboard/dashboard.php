@@ -131,6 +131,8 @@
                             <H3>Selamat Kepada <?= $this->session->userdata['full_name'] ?>, Anda dinyatakan
                                 <?php if ($ver_siswa->id_verivikasi == 1) { ?>
                                     <a type="text" style="font-size: 20px; color: black; font-weight: 50px;">LULUS</a>
+                                    <h3>Silahkan Masuk Link Grup <h3><a href="whatsapp://send?text=Hello&phone=+628********1" style="color: #25D366;">Whatsapp</a></h3>
+                                    </h3>
                                 <?php } ?>
                             </H3>
                             <div class="card-body">

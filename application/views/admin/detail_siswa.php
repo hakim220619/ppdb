@@ -2,6 +2,10 @@
       .center {
           text-align: center;
       }
+
+      .ktp {
+          height: 700px;
+      }
   </style>
   <div class="main-panel">
       <div class="content">
@@ -122,11 +126,63 @@
                                       </a>
                                       <div class="collapse show" id="dataall">
                                           <div class="card-body" style="text-align: center;">
-                                              <?php foreach ($detail_siswa as $u) { ?>
-                                                  <a href="<?= base_url('assets/foto/scan/' . $u->ktp) ?>" target="_blank" class="btn btn-primary btn-round ml-auto">Show KTP Pdf</a>
-                                                  <a href=" <?= base_url('assets/foto/scan/' . $u->kk) ?>" target="_blank" class="btn btn-info btn-round ml-auto">Show KK Pdf</a>
-                                                  <a href=" <?= base_url('assets/foto/scan/' . $u->akta) ?>" target="_blank" class="btn btn-warning btn-round ml-auto">Show AKTA Pdf</a>
+                                              <?php if ($get_pdf->ktp == null) { ?>
+
+                                              <?php } elseif ($get_pdf->kk == null) { ?>
+                                              <?php } elseif ($get_pdf->akta == null) { ?>
+                                              <?php } else { ?>
+                                                  <?php foreach ($detail_siswa as $u) { ?>
+                                                      <button type="button" class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target=".bd-example-modal-lg">Show KTP</button>
+                                                      <button type="button" class="btn btn-info btn-round ml-auto" data-toggle="modal" data-target=".bd-example-modal-lg-kk">Show KK</button>
+                                                      <button type="button" class="btn btn-warning btn-round ml-auto" data-toggle="modal" data-target=".bd-example-modal-lg-akta">Show AKTA</button>
+                                                  <?php } ?>
                                               <?php } ?>
+                                          </div>
+                                      </div>
+
+                                      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog modal-lg">
+                                              <div class="modal-content ktp">
+                                                  <div class="modal-header">
+                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <?php foreach ($detail_siswa as $u) { ?>
+                                                          <iframe src="<?= base_url('assets/foto/scan/' . $u->ktp) ?>" style="height: 600px;" class="col-lg-12 col-md-12 col-sm-12"></iframe>
+                                                      <?php } ?>
+                                                  </div>
+                                              </div>
+
+                                          </div>
+                                      </div>
+                                      <div class="modal fade bd-example-modal-lg-kk" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog modal-lg">
+                                              <div class="modal-content ktp">
+                                                  <div class="modal-header">
+                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <?php foreach ($detail_siswa as $u) { ?>
+                                                          <iframe src="<?= base_url('assets/foto/scan/' . $u->kk) ?>" style="height: 600px;" class="col-lg-12 col-md-12 col-sm-12"></iframe>
+                                                      <?php } ?>
+                                                  </div>
+                                              </div>
+
+                                          </div>
+                                      </div>
+                                      <div class="modal fade bd-example-modal-lg-akta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog modal-lg">
+                                              <div class="modal-content ktp">
+                                                  <div class="modal-header">
+                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <?php foreach ($detail_siswa as $u) { ?>
+                                                          <iframe src="<?= base_url('assets/foto/scan/' . $u->akta) ?>" style="height: 600px;" class="col-lg-12 col-md-12 col-sm-12"></iframe>
+                                                      <?php } ?>
+                                                  </div>
+                                              </div>
+
                                           </div>
                                       </div>
                                   </div>
