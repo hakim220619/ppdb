@@ -33,7 +33,7 @@
                                           <th>Majalah</th>
                                           <th>Alat Tulis</th>
                                           <th>Status</th>
-                                          <th>Action</th>
+                                          <!-- <th>Action</th> -->
                                       </tr>
                                   </thead>
                                   <tbody class="center">
@@ -50,7 +50,7 @@
                                               <td><?= rupiah($a->majalah) ?></td>
                                               <td><?= rupiah($a->alat_tulis) ?></td>
                                               <td><?= $a->is_active ?></td>
-                                              <td>
+                                              <!-- <td>
                                                   <div class="form-button-action">
                                                       <button data-target="#edit-apk<?= $a->id_pembayaran ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                           <i class="fa fa-edit"></i>
@@ -59,7 +59,7 @@
                                                           <i class="fa fa-times"></i>
                                                       </button>
                                                   </div>
-                                              </td>
+                                              </td> -->
                                           </tr>
                                           <div class="modal fade" id="edit-apk<?= $a->id_pembayaran ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
