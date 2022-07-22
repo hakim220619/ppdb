@@ -544,8 +544,6 @@ class Admin extends MY_Controller
     public function delete_pembayaran()
     {
         $id = $this->input->get('id_pembayaran');
-
-
         $this->db->delete('pembayaran', array('id' => $id));
         $this->session->set_flashdata('success', "<script>
                     swal({
