@@ -52,16 +52,16 @@
                                               <td><?= $a->is_active ?></td>
                                               <td>
                                                   <div class="form-button-action">
-                                                      <button data-target="#edit-apk<?= $a->id ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                      <button data-target="#edit-apk<?= $a->id_pembayaran ?>" type="button" data-toggle="modal" title="Edit Data" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                                           <i class="fa fa-edit"></i>
                                                       </button>
-                                                      <button type="button" class="btn btn-link btn-danger btn-lg" data-toggle="modal" data-target="#deluser<?= $a->id ?>">
+                                                      <button type="button" class="btn btn-link btn-danger btn-lg" data-toggle="modal" data-target="#deluser<?= $a->id_pembayaran ?>">
                                                           <i class="fa fa-times"></i>
                                                       </button>
                                                   </div>
                                               </td>
                                           </tr>
-                                          <div class="modal fade" id="edit-apk<?= $a->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                          <div class="modal fade" id="edit-apk<?= $a->id_pembayaran ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
                                                   <div class="modal-content">
                                                       <div class="modal-header no-bd">
@@ -80,7 +80,7 @@
 
                                                           <form action="<?= base_url('admin/update_pembayaran'); ?>" method="post" enctype="multipart/form-data">
                                                               <div class="row">
-                                                                  <input hidden type="text" class="form-control" id="id" name="id" placeholder="id" value="<?= $a->id ?>">
+                                                                  <input type="text" class="form-control" id="id" name="id" placeholder="id" value="<?= $a->id_pembayaran ?>">
                                                                   <div class="col-md-12 ">
                                                                       <div class="form-group form-group-default">
                                                                           <label>Tahun Ajaran</label>
@@ -161,7 +161,7 @@
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="modal fade" id="deluser<?= $a->id ?>" tabindex="-1" role="dialog" aria-labelledby="addNewDonaturLabel" aria-hidden="true">
+                                          <div class="modal fade" id="deluser<?= $a->id_pembayaran ?>" tabindex="-1" role="dialog" aria-labelledby="addNewDonaturLabel" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
                                                   <div class="modal-content">
                                                       <div class="modal-header">
@@ -175,7 +175,7 @@
                                                       </div>
                                                       <div class="modal-footer">
                                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                          <a href="<?= base_url('admin/delete_pembayaran?id=') ?><?= $a->id ?>" class="btn btn-primary">Hapus</a>
+                                                          <a href="<?= base_url('admin/delete_pembayaran?id_pembayaran=') ?><?= $a->id_pembayaran ?>" class="btn btn-primary">Hapus</a>
                                                       </div>
                                                   </div>
                                               </div>

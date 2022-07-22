@@ -529,8 +529,9 @@ class Admin extends MY_Controller
             'seragam' => $this->input->post('seragam'),
             'majalah' => $this->input->post('majalah'),
             'alat_tulis' => $this->input->post('alat_tulis'),
+            'is_active' => $this->input->post('is_active'),
         );
-        // dead($save);
+        // dead($id);
         $this->Mod_user->updatepembayaran($id, $save);
         $this->session->set_flashdata('success', "<script>
                     swal({
@@ -542,7 +543,7 @@ class Admin extends MY_Controller
     }
     public function delete_pembayaran()
     {
-        $id = $this->input->get('id');
+        $id = $this->input->get('id_pembayaran');
 
 
         $this->db->delete('pembayaran', array('id' => $id));
@@ -627,7 +628,7 @@ class Admin extends MY_Controller
         $ket = 'Semua Data Siswa Diterima';
         ob_start();
         require('assets/fpdf/fpdf.php');
-        $data['siswa_all'] = $this->Mod_user->view_all()->result();;
+        $data['siswa_all'] = $this->Mod_user->view_all()->result();
         $data['ket'] = $ket;
         $this->load->view('admin/print_siswa', $data);
     }

@@ -300,11 +300,12 @@ class Mod_user extends CI_Model
     public function pembayaran()
     {
         $query = $this->db->query("
-		select * 
+		select p.id as id_pembayaran, p.id_tahun, p.golongan, p.sumbangan_awal, p.seragam, p.majalah, p.alat_tulis, p.is_active, 
+        ta.id, ta.tahun, ta.status 
         from pembayaran p
         left join tahun_ajaran ta
         on p.id_tahun=ta.id
-        where p.is_active = 'Y'
+        
 		");
         return $query;
     }
